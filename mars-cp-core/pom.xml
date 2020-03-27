@@ -9,12 +9,7 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>mars-cp-user</artifactId>
+    <artifactId>mars-cp-core</artifactId>
 
-    <dependencies>
-        <dependency>
-            <groupId>com.github.yuyenews</groupId>
-            <artifactId>mars-cp-core</artifactId>
-        </dependency>
-    </dependencies>
+
 </project>

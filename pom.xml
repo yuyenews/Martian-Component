@@ -11,18 +11,25 @@
     <modules>
         <module>mars-cp-user</module>
         <module>mars-cp-authority</module>
+        <module>mars-cp-core</module>
     </modules>
+
+    <dependencyManagement>
+        <dependencies>
+            <dependency>
+                <groupId>com.github.yuyenews</groupId>
+                <artifactId>mars-cp-core</artifactId>
+                <version>1.0</version>
+            </dependency>
+        </dependencies>
+    </dependencyManagement>
 
     <dependencies>
         <dependency>
             <groupId>com.github.yuyenews</groupId>
-            <artifactId>mars-mvc</artifactId>
+            <artifactId>mars-starter</artifactId>
             <version>3.0.15</version>
-        </dependency>
-        <dependency>
-            <groupId>com.github.yuyenews</groupId>
-            <artifactId>mars-jdbc</artifactId>
-            <version>3.0.15</version>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 </project>
