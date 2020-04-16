@@ -29,7 +29,7 @@ public interface UserInfoApi {
     ResultVO marsCpUserRegistered(UserInfoDTO userInfoDTO);
 
     /**
-     * 用户注册
+     * 获取用户信息
      * @param userInfoDTO 参数
      * @return 响应
      */
