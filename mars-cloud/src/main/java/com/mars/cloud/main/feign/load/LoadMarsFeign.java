@@ -14,7 +14,7 @@ import java.util.Set;
 /**
  * 加载
  */
-public class LoadMarsCloudFeign {
+public class LoadMarsFeign {
 
     private static MarsSpace marsSpace = MarsSpace.getEasySpace();
 
