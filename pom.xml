@@ -9,10 +9,10 @@
     <packaging>pom</packaging>
     <version>1.0</version>
     <modules>
-        <module>mars-cp-user</module>
-        <module>mars-cp-authority</module>
+        <module>mars-user</module>
+        <module>mars-authority</module>
         <module>mars-cp-core</module>
-        <module>mars-cp-extends</module>
+        <module>mars-extends</module>
     </modules>
 
     <properties>

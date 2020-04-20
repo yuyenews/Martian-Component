@@ -9,18 +9,12 @@
     </parent>
     <modelVersion>4.0.0</modelVersion>
 
-    <artifactId>mars-cp-extends</artifactId>
+    <artifactId>mars-user</artifactId>
 
     <dependencies>
         <dependency>
-            <groupId>com.belerweb</groupId>
-            <artifactId>pinyin4j</artifactId>
-            <version>2.5.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.sun.mail</groupId>
-            <artifactId>javax.mail</artifactId>
-            <version>1.6.2</version>
+            <groupId>com.github.yuyenews</groupId>
+            <artifactId>mars-cp-core</artifactId>
         </dependency>
     </dependencies>
 </project>
