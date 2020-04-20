@@ -13,6 +13,7 @@
         <module>mars-authority</module>
         <module>mars-cp-core</module>
         <module>mars-extends</module>
+        <module>mars-cloud</module>
     </modules>
 
     <properties>
