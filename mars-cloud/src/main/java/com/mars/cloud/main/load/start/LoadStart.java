@@ -16,6 +16,4 @@ public class LoadStart {
     public void loadApi() throws Exception {
         registered.registerApi();
     }
-
-
 }

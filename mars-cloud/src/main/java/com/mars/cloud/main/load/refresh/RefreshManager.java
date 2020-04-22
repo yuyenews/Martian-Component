@@ -1,10 +1,14 @@
 package com.mars.cloud.main.load.refresh;
 
+import com.mars.cloud.main.core.cache.MarsCacheApi;
 import com.mars.cloud.main.core.constant.MarsCloudConstant;
 import com.mars.cloud.main.core.zookeeper.ZkHelper;
 import com.mars.cloud.main.load.register.Registered;
 import com.mars.core.annotation.MarsBean;
+import com.mars.core.annotation.MarsTimer;
 import com.mars.core.annotation.MarsWrite;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -17,8 +21,21 @@ import java.util.concurrent.ConcurrentHashMap;
 @MarsBean("refreshManager")
 public class RefreshManager {
 
-    @MarsWrite("registered")
-    private Registered registered;
+    /**
+     * 刷新本地缓存的接口
+     */
+    @MarsTimer(loop = 15000)
+    public void RefreshCacheApi(){
+        try {
+            Map<String, List<String>> urlMap = refreshCacheApi();
+            MarsCacheApi.getMarsCacheApi().save(urlMap);
+        } catch (Exception e){
+            /*
+             * 如果出异常了，由于被捕获，所以程序不会停掉，15秒后会再执行一次，而且这个异常没有提示的意义
+             * 所以这里什么都不干，让这个定时任务默默的就好
+             */
+        }
+    }
 
     /**
      * 从zookeeper里把所有的接口都拉取下来

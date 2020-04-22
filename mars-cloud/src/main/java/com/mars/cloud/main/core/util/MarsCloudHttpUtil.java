@@ -26,7 +26,7 @@ public class MarsCloudHttpUtil {
      * @return 结果
      * @throws Exception 异常
      */
-    public static InputStream request(String url, Object params) throws Exception {
+    public static InputStream request(String url, Object[] params) throws Exception {
 
         /* 将参数序列化成byte[] */
         byte[] param = SerializableUtil.serialization(params);

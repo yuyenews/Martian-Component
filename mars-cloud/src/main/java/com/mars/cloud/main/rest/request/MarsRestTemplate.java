@@ -5,7 +5,6 @@ import com.mars.cloud.main.rest.load.MarsCloudGetServerApis;
 import com.mars.core.util.SerializableUtil;
 
 import java.io.InputStream;
-import java.util.HashMap;
 
 /**
  * 发起rest请求
@@ -33,14 +32,14 @@ public class MarsRestTemplate {
      * @return 结果
      * @throws Exception 异常
      */
-    public static <T> T request(String serverName, String methodName, Object params, Class<T> resultType) throws Exception {
+    public static <T> T request(String serverName, String methodName, Object[] params, Class<T> resultType) throws Exception {
         String url = "http://";
         try {
 
             url = url + MarsCloudGetServerApis.getUrl(serverName, methodName);
 
             if(params == null){
-                params = new HashMap<>();
+                params = new Object[0];
             }
 
             InputStream inputStream = MarsCloudHttpUtil.request(url, params);

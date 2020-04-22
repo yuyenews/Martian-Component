@@ -5,17 +5,17 @@
     <parent>
         <artifactId>Mars-Component</artifactId>
         <groupId>com.github.yuyenews</groupId>
-        <version>1.0</version>
+        <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-    <version>3.0.11</version>
+    <version>3.0.10</version>
     <artifactId>mars-cloud</artifactId>
 
     <dependencies>
         <dependency>
             <groupId>org.apache.zookeeper</groupId>
             <artifactId>zookeeper</artifactId>
-            <version>3.4.14</version>
+            <version>3.6.0</version>
             <exclusions>
                 <exclusion>
                     <groupId>org.slf4j</groupId>

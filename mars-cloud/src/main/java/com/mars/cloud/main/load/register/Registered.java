@@ -89,14 +89,8 @@ public class Registered {
      */
     private void checkMethod(MarsMappingModel marsMappingModel) throws Exception {
         ReqMethod reqMethod = marsMappingModel.getReqMethod();
-        Class cls = marsMappingModel.getCls();
-        String methodName = marsMappingModel.getMethod();
-
         if(!reqMethod.equals(ReqMethod.POST)){
             throw new Exception("MarsCloud的接口必须全部是POST请求");
-        }
-        if(marsMappingModel.getExeMethod().getParameterCount() > 1){
-            throw new Exception("MarsCloud对外提供的接口只允许有一个参数，如果你有多个参数，可以合并成一个实体类或者用Map["+cls+"."+methodName+"]");
         }
     }
 }

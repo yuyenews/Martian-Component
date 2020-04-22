@@ -5,10 +5,10 @@
     <parent>
         <artifactId>Mars-Component</artifactId>
         <groupId>com.github.yuyenews</groupId>
-        <version>1.0</version>
+        <version>1.0.0</version>
     </parent>
     <modelVersion>4.0.0</modelVersion>
-
+    <version>2.2.2</version>
     <artifactId>mars-extends</artifactId>
 
     <dependencies>
@@ -21,6 +21,10 @@
             <groupId>com.sun.mail</groupId>
             <artifactId>javax.mail</artifactId>
             <version>1.6.2</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.hutool</groupId>
+            <artifactId>hutool-all</artifactId>
         </dependency>
     </dependencies>
 </project>
