@@ -32,12 +32,7 @@ public class MarsCloudParamAndResult implements BaseParamAndResult {
             if(paramTypes == null || paramTypes.length < 1){
                 return null;
             }
-            Object[] params = new Object[paramTypes.length];
-            for(int i = 0;i<paramTypes.length;i++){
-                Class cls = paramTypes[i];
-                params[i] = getObject(cls,request);
-            }
-            return params;
+            return getObject(request);
         } catch (Exception e){
             throw new Exception("参数注入异常",e);
         }
@@ -70,17 +65,20 @@ public class MarsCloudParamAndResult implements BaseParamAndResult {
 
     /**
      * 获取参数并反序列化
-     * @param cls 类型
      * @param request 请求
      * @return 对象
      * @throws Exception 异常
      */
-    private Object getObject(Class cls, HttpMarsRequest request) throws Exception {
+    private Object[] getObject(HttpMarsRequest request) throws Exception {
         MarsFileUpLoad marsFileUpLoad = request.getFile(MarsCloudConstant.PARAM);
         if(marsFileUpLoad == null){
             return null;
         }
         InputStream inputStream = marsFileUpLoad.getInputStream();
-        return SerializableUtil.deSerialization(inputStream, cls);
+        Object[] params = SerializableUtil.deSerialization(inputStream, Object[].class);
+        if(params == null || params.length < 1){
+            return null;
+        }
+        return params;
     }
 }

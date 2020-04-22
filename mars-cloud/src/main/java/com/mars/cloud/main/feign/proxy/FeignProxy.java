@@ -2,6 +2,8 @@ package com.mars.cloud.main.feign.proxy;
 
 import com.mars.cloud.main.core.annotation.MarsFeign;
 import com.mars.cloud.main.rest.request.MarsRestTemplate;
+import com.mars.server.server.request.HttpMarsRequest;
+import com.mars.server.server.request.HttpMarsResponse;
 import net.sf.cglib.proxy.Enhancer;
 import net.sf.cglib.proxy.MethodInterceptor;
 import net.sf.cglib.proxy.MethodProxy;
@@ -44,9 +46,7 @@ public class FeignProxy implements MethodInterceptor {
 
         check(marsFeign,method);
 
-        Object param = getParam(args);
-
-        return MarsRestTemplate.request(marsFeign.serverName(),method.getName(),param, method.getReturnType());
+        return MarsRestTemplate.request(marsFeign.serverName(),method.getName(),args, method.getReturnType());
     }
 
     /**
@@ -59,21 +59,11 @@ public class FeignProxy implements MethodInterceptor {
         if(marsFeign.serverName() == null){
             throw new Exception("接口上MarsFeign注解的serverName为空:["+cls.getName()+"."+method.getName()+"]");
         }
-    }
-
-    /**
-     * 获取请求参数
-     * @param args 参数
-     * @return 参数
-     * @throws Exception 异常
-     */
-    private Object getParam(Object[] args) throws Exception {
-        if(args != null && args.length > 0){
-            if (args.length > 1){
-                throw new Exception("Feign的方法只允许有一个参数");
+        Class[] paramTypes = method.getParameterTypes();
+        for(Class cls : paramTypes){
+            if(cls.equals(HttpMarsRequest.class) || cls.equals(HttpMarsResponse.class)){
+                throw new Exception("MarsCloud接口，只可以用自定义对象作为参数，不可以用内置对象:["+cls.getName()+"."+method.getName()+"]");
             }
-            return args[0];
         }
-        return null;
     }
 }
