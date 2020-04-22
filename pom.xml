@@ -7,7 +7,7 @@
     <groupId>com.github.yuyenews</groupId>
     <artifactId>Mars-Component</artifactId>
     <packaging>pom</packaging>
-    <version>1.0</version>
+    <version>1.0.0</version>
     <modules>
         <module>mars-user</module>
         <module>mars-authority</module>
