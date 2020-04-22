@@ -23,7 +23,7 @@ public class StartCloudAfter implements BaseAfter {
     @Override
     public void after() throws Exception {
         Boolean getWay = MarsCloudConfigUtil.getMarsCloudConfig().getCloudConfig().getGateWay();
-        if(getWay) {
+        if(!getWay) {
             /* 指定 处理参数和响应的对象实例 */
             ParamAndResultFactory.setBaseParamAndResult(new MarsCloudParamAndResult());
 
