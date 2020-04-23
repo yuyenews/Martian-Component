@@ -10,7 +10,6 @@ public class UserGetVO {
     /**
      * 主键
      */
-    @MarsDataCheck(notNull = true, msg = "ID不可以为空")
     private Integer id;
 
     public Integer getId() {
