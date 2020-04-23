@@ -33,10 +33,10 @@ public class MarsRestTemplate {
      * @throws Exception 异常
      */
     public static <T> T request(String serverName, String methodName, Object[] params, Class<T> resultType) throws Exception {
-        String url = "http://";
+        String url = null;
         try {
 
-            url = url + MarsCloudGetServerApis.getUrl(serverName, methodName);
+            url = MarsCloudGetServerApis.getUrl(serverName, methodName);
 
             if(params == null){
                 params = new Object[0];

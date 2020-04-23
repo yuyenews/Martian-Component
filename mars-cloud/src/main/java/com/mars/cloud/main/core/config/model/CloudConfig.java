@@ -1,5 +1,6 @@
 package com.mars.cloud.main.core.config.model;
 
+import com.mars.cloud.main.core.config.model.enums.Protocol;
 import com.mars.cloud.main.core.config.model.enums.Strategy;
 
 public class CloudConfig {
@@ -28,6 +29,11 @@ public class CloudConfig {
      * 是否为一个网关
      */
     private Boolean gateWay;
+
+    /**
+     * 请求协议
+     */
+    private Protocol protocol = Protocol.HTTP;
 
     public String getName() {
         return name;
@@ -75,5 +81,13 @@ public class CloudConfig {
 
     public void setGateWay(Boolean gateWay) {
         this.gateWay = gateWay;
+    }
+
+    public Protocol getProtocol() {
+        return protocol;
+    }
+
+    public void setProtocol(Protocol protocol) {
+        this.protocol = protocol;
     }
 }

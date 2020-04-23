@@ -1,5 +1,6 @@
 package com.mars.cloud.main.core.util;
 
+import com.mars.cloud.main.core.config.model.enums.Protocol;
 import com.mars.core.util.MarsAddressUtil;
 
 /**
@@ -20,7 +21,8 @@ public class MarsCloudUtil {
      */
     public static String getLocalHost() throws Exception {
         if (localHost == null) {
-            localHost = getLocalIp() + ":" + getPort();
+            Protocol protocol = MarsCloudConfigUtil.getMarsCloudConfig().getCloudConfig().getProtocol();
+            localHost = protocol.getCode() + getLocalIp() + ":" + getPort();
         }
         return localHost;
     }
