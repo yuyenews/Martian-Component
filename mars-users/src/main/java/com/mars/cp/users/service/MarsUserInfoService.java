@@ -30,6 +30,7 @@ public class MarsUserInfoService implements MarsUserInfoApi {
     @Override
     public ResultVO marsUsersGetUserInfo(UserGetVO userGetVO) {
         UserInfoDTO userInfoDTO = marsUserInfoDAO.getUserInfo(userGetVO.getId());
+        userInfoDTO.setUser_pwd(null);
         return ResultVO.success(userInfoDTO);
     }
 

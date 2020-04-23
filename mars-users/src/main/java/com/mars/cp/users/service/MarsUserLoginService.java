@@ -33,6 +33,7 @@ public class MarsUserLoginService implements MarsUserLoginApi {
         userLoginVO.setUser_pwd(MarsMD5Util.MD5Encode(userLoginVO.getUser_pwd()));
 
         UserInfoDTO userInfo = marsUserLoginDAO.login(userLoginVO);
+        userInfo.setUser_pwd(null);
         String token = JwtManager.getJwtManager().createToken(userInfo);
 
         return ResultVO.success(userInfo).addResult("token", token);

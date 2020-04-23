@@ -65,14 +65,14 @@ public class ResultVO {
 
     public void setResult(Object result) {
         if(this.result == null){
-            result = new HashMap<>();
+            this.result = new HashMap<>();
         }
         this.result.put("data",result);
     }
 
     public ResultVO addResult(String key,Object result){
         if(this.result == null){
-            result = new HashMap<>();
+            this.result = new HashMap<>();
         }
         this.result.put(key,result);
         return this;
