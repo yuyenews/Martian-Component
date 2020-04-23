@@ -11,6 +11,8 @@
     <modules>
         <module>mars-extends</module>
         <module>mars-cloud</module>
+        <module>mars-users</module>
+        <module>mars-cp-base</module>
     </modules>
 
     <properties>
