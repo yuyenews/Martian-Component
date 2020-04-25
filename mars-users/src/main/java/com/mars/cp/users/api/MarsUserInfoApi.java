@@ -15,7 +15,7 @@ public interface MarsUserInfoApi {
     /**
      * 根据ID获取用户信息
      *
-     * @param userGetVO 用户信息
+     * @param userGetVO 用户信息对象
      * @return 结果
      */
     @RequestMethod(ReqMethod.POST)
