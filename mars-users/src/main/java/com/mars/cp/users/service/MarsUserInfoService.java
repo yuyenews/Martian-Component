@@ -24,19 +24,19 @@ public class MarsUserInfoService {
      * @param id 用户ID
      * @return 结果
      */
-    public UserInfoDTO marsUsersGetUserInfo(int id) {
+    public UserInfoDTO getUserInfo(int id) {
         UserInfoDTO userInfoDTO = marsUserInfoDAO.getUserInfo(id);
         userInfoDTO.setUser_pwd(null);
         return userInfoDTO;
     }
 
     /**
-     * 用户注册
+     * 添加用户
      *
      * @param userInfoDTO 用户信息
      * @return 结果
      */
-    public int marsUsersReg(UserInfoDTO userInfoDTO) {
+    public int addUserInfo(UserInfoDTO userInfoDTO) {
         userInfoDTO.setUser_pwd(MarsMD5Util.MD5Encode(userInfoDTO.getUser_pwd()));
         return marsUserInfoDAO.addUserInfo(userInfoDTO);
     }

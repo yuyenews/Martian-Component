@@ -25,7 +25,7 @@ public class MarsUserLoginService {
      * @param userLoginDTO 用户信息
      * @return 结果
      */
-    public UserInfoDTO marsUsersLogin(UserLoginDTO userLoginDTO) {
+    public UserInfoDTO userLogin(UserLoginDTO userLoginDTO) {
         userLoginDTO.setUser_pwd(MarsMD5Util.MD5Encode(userLoginDTO.getUser_pwd()));
         return marsUserLoginDAO.login(userLoginDTO);
     }
