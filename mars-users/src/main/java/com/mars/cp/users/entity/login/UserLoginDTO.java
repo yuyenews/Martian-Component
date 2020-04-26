@@ -1,22 +1,18 @@
-package com.mars.cp.users.entity;
-
-import com.mars.core.annotation.MarsDataCheck;
+package com.mars.cp.users.entity.login;
 
 /**
  * 登录VO
  */
-public class UserLoginVO {
+public class UserLoginDTO {
 
     /**
      * 用户标识（用户名，手机号，邮箱）
      */
-    @MarsDataCheck(notNull = true,msg = "请输入用户名或者手机号或者邮箱")
     private String user_tag;
 
     /**
      * 用户密码
      */
-    @MarsDataCheck(notNull = true,msg = "请输入密码")
     private String user_pwd;
 
     public String getUser_tag() {

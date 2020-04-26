@@ -1,4 +1,4 @@
-package com.mars.cp.users.entity;
+package com.mars.cp.users.entity.biz;
 
 public class UserInfoDTO {
 

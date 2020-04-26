@@ -1,7 +1,7 @@
 package com.mars.cp.users.dao;
 
 import com.mars.core.annotation.MarsDao;
-import com.mars.cp.users.entity.UserInfoDTO;
+import com.mars.cp.users.entity.biz.UserInfoDTO;
 import com.mars.jdbc.annotation.MarsGet;
 import com.mars.jdbc.annotation.MarsUpdate;
 import com.mars.jdbc.annotation.enums.OperType;

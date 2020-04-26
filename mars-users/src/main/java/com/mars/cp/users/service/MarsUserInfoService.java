@@ -2,18 +2,15 @@ package com.mars.cp.users.service;
 
 import com.mars.core.annotation.MarsBean;
 import com.mars.core.annotation.MarsWrite;
-import com.mars.cp.base.entity.ResultVO;
-import com.mars.cp.users.api.MarsUserInfoApi;
 import com.mars.cp.users.dao.MarsUserInfoDAO;
-import com.mars.cp.users.entity.UserGetVO;
-import com.mars.cp.users.entity.UserInfoDTO;
+import com.mars.cp.users.entity.biz.UserInfoDTO;
 import com.mars.cp.users.util.MarsMD5Util;
 
 /**
  * 用户信息
  */
 @MarsBean("marsUserInfoService")
-public class MarsUserInfoService implements MarsUserInfoApi {
+public class MarsUserInfoService {
 
     /**
      * 用户信息持久层
@@ -24,14 +21,13 @@ public class MarsUserInfoService implements MarsUserInfoApi {
     /**
      * 根据ID获取用户信息
      *
-     * @param userGetVO 用户信息
+     * @param id 用户ID
      * @return 结果
      */
-    @Override
-    public ResultVO marsUsersGetUserInfo(UserGetVO userGetVO) {
-        UserInfoDTO userInfoDTO = marsUserInfoDAO.getUserInfo(userGetVO.getId());
+    public UserInfoDTO marsUsersGetUserInfo(int id) {
+        UserInfoDTO userInfoDTO = marsUserInfoDAO.getUserInfo(id);
         userInfoDTO.setUser_pwd(null);
-        return ResultVO.success(userInfoDTO);
+        return userInfoDTO;
     }
 
     /**
