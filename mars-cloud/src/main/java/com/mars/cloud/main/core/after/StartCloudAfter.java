@@ -6,7 +6,7 @@ import com.mars.cloud.main.rest.util.MarsCloudParamAndResult;
 import com.mars.core.annotation.MarsAfter;
 import com.mars.core.annotation.MarsWrite;
 import com.mars.core.base.BaseAfter;
-import com.mars.netty.par.factory.ParamAndResultFactory;
+import com.mars.tomcat.par.factory.ParamAndResultFactory;
 
 /**
  * 在项目启动后加载Cloud配置数据
