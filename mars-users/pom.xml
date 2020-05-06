@@ -5,7 +5,10 @@
 
     <modelVersion>4.0.0</modelVersion>
     <version>1.0.2</version>
+    <groupId>com.github.yuyenews</groupId>
     <artifactId>mars-users</artifactId>
+    <packaging>jar</packaging>
+
     <properties>
         <javadocExecutable>${java.home}/../bin/javadoc</javadocExecutable>
     </properties>
