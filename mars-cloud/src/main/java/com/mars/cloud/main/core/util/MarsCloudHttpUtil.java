@@ -1,7 +1,7 @@
 package com.mars.cloud.main.core.util;
 
 import com.mars.cloud.main.core.constant.MarsCloudConstant;
-import com.mars.core.util.SerializableUtil;
+import com.mars.common.util.SerializableUtil;
 import okhttp3.*;
 
 import java.io.InputStream;

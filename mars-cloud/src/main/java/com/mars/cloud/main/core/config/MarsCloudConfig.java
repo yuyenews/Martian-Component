@@ -1,7 +1,7 @@
 package com.mars.cloud.main.core.config;
 
 import com.mars.cloud.main.core.config.model.CloudConfig;
-import com.mars.core.base.config.MarsConfig;
+import com.mars.common.base.config.MarsConfig;
 
 /**
  * Mars-cloud配置

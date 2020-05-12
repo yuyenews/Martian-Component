@@ -1,7 +1,7 @@
 package com.mars.cloud.main.core.util;
 
 import com.mars.cloud.main.core.config.model.enums.Protocol;
-import com.mars.core.util.MarsAddressUtil;
+import com.mars.common.util.MarsAddressUtil;
 
 /**
  * 工具类

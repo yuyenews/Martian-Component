@@ -3,8 +3,8 @@ package com.mars.cloud.main.load.refresh;
 import com.mars.cloud.main.core.cache.MarsCacheApi;
 import com.mars.cloud.main.core.constant.MarsCloudConstant;
 import com.mars.cloud.main.core.zookeeper.ZkHelper;
-import com.mars.core.annotation.MarsBean;
-import com.mars.core.annotation.MarsTimer;
+import com.mars.common.annotation.bean.MarsBean;
+import com.mars.common.annotation.bean.MarsTimer;
 
 import java.util.ArrayList;
 import java.util.List;

@@ -1,8 +1,8 @@
 package com.mars.cloud.main.core.util;
 
 import com.mars.cloud.main.core.config.MarsCloudConfig;
-import com.mars.core.base.config.MarsConfig;
-import com.mars.core.util.MarsConfiguration;
+import com.mars.common.base.config.MarsConfig;
+import com.mars.common.util.MarsConfiguration;
 
 /**
  * cloud模块配置文件管理

@@ -1,8 +1,8 @@
 package com.mars.cloud.main.rest.util;
 
 import com.mars.cloud.main.core.constant.MarsCloudConstant;
-import com.mars.core.constant.MarsConstant;
-import com.mars.core.util.SerializableUtil;
+import com.mars.common.constant.MarsConstant;
+import com.mars.common.util.SerializableUtil;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
 import com.mars.server.server.request.model.MarsFileUpLoad;

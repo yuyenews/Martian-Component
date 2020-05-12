@@ -3,9 +3,9 @@ package com.mars.cloud.main.core.after;
 import com.mars.cloud.main.core.util.MarsCloudConfigUtil;
 import com.mars.cloud.main.load.start.LoadStart;
 import com.mars.cloud.main.rest.util.MarsCloudParamAndResult;
-import com.mars.core.annotation.MarsAfter;
-import com.mars.core.annotation.MarsWrite;
-import com.mars.core.base.BaseAfter;
+import com.mars.common.annotation.bean.MarsAfter;
+import com.mars.common.annotation.bean.MarsWrite;
+import com.mars.common.base.BaseAfter;
 import com.mars.tomcat.par.factory.ParamAndResultFactory;
 
 /**

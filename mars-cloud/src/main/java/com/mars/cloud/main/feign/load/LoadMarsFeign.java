@@ -2,9 +2,13 @@ package com.mars.cloud.main.feign.load;
 
 import com.mars.cloud.main.core.annotation.MarsFeign;
 import com.mars.cloud.main.feign.proxy.FeignProxy;
-import com.mars.core.annotation.*;
-import com.mars.core.constant.MarsConstant;
-import com.mars.core.constant.MarsSpace;
+import com.mars.common.annotation.api.MarsApi;
+import com.mars.common.annotation.api.MarsInterceptor;
+import com.mars.common.annotation.bean.MarsAfter;
+import com.mars.common.annotation.bean.MarsBean;
+import com.mars.common.annotation.jdbc.MarsDao;
+import com.mars.common.constant.MarsConstant;
+import com.mars.common.constant.MarsSpace;
 import com.mars.core.load.LoadHelper;
 import com.mars.core.model.MarsBeanModel;
 
