@@ -11,7 +11,7 @@ import java.util.List;
 /**
  * 获取请求路径
  */
-public class MarsCloudGetServerApis {
+public class MarsCloudServerApis {
 
     /**
      * 根据服务名和Controller的方法名称,获取接口信息
@@ -22,11 +22,11 @@ public class MarsCloudGetServerApis {
         String path = MarsCloudConstant.SERVER_NODE.replace("{serverName}",serverName).replace("{method}",methodName);
 
         /* 从本地缓存中获取请求连接 */
-        List<String> urlList  = getUrlsFromCache(path);
+        List<String> urlList  = getUrlsForCache(path);
 
         if(urlList == null){
             /* 如果本地缓存中没有所需的连接，就去zookeeper里读取，并缓存到本地 */
-            urlList = getUrlsFromZookeeper(path);
+            urlList = getUrlsForZookeeper(path);
             if(urlList != null && urlList.size() > 0){
                 MarsCacheApi.getMarsCacheApi().set(path,urlList);
             }
@@ -40,7 +40,7 @@ public class MarsCloudGetServerApis {
      * @param path
      * @return
      */
-    private static List<String> getUrlsFromCache(String path){
+    private static List<String> getUrlsForCache(String path){
         return MarsCacheApi.getMarsCacheApi().get(path);
     }
 
@@ -49,7 +49,7 @@ public class MarsCloudGetServerApis {
      * @param path
      * @return
      */
-    private static List<String> getUrlsFromZookeeper(String path) throws Exception {
+    private static List<String> getUrlsForZookeeper(String path) throws Exception {
 
         /* 如果zookeeper不是连接状态，则打开连接 */
         ZkHelper.openConnection();

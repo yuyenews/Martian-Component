@@ -6,7 +6,7 @@ import com.mars.common.util.SerializableUtil;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
 import com.mars.server.server.request.model.MarsFileUpLoad;
-import com.mars.tomcat.par.base.BaseParamAndResult;
+import com.mars.iserver.par.base.BaseParamAndResult;
 
 import java.io.ByteArrayInputStream;
 import java.io.InputStream;

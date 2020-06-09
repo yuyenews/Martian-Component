@@ -21,9 +21,9 @@ public class RefreshManager {
      * 刷新本地缓存的接口
      */
     @MarsTimer(loop = 15000)
-    public void RefreshCacheApi(){
+    public void refreshCacheApi(){
         try {
-            Map<String, List<String>> urlMap = refreshCacheApi();
+            Map<String, List<String>> urlMap = doRefreshCacheApi();
             MarsCacheApi.getMarsCacheApi().save(urlMap);
         } catch (Exception e){
             /*
@@ -38,7 +38,7 @@ public class RefreshManager {
      * @return 所有的接口
      * @throws Exception 异常
      */
-    public synchronized Map<String,List<String>> refreshCacheApi() throws Exception {
+    public synchronized Map<String,List<String>> doRefreshCacheApi() throws Exception {
         /* 如果zk没有打开连接的话 就打开一下 */
         ZkHelper.openConnection();
 

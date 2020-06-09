@@ -95,7 +95,7 @@ public class ZkWatcher implements Watcher {
     private void refreshCacheApi() {
         try {
             RefreshManager refreshManager = BeanFactory.getBean("refreshManager",RefreshManager.class);
-            Map<String, List<String>> apiMaps = refreshManager.refreshCacheApi();
+            Map<String, List<String>> apiMaps = refreshManager.doRefreshCacheApi();
             MarsCacheApi.getMarsCacheApi().save(apiMaps);
             return;
         } catch (Exception e) {

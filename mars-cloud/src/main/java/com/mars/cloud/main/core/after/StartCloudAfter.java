@@ -6,7 +6,7 @@ import com.mars.cloud.main.rest.util.MarsCloudParamAndResult;
 import com.mars.common.annotation.bean.MarsAfter;
 import com.mars.common.annotation.bean.MarsWrite;
 import com.mars.common.base.BaseAfter;
-import com.mars.tomcat.par.factory.ParamAndResultFactory;
+import com.mars.iserver.par.factory.ParamAndResultFactory;
 
 /**
  * 在项目启动后加载Cloud配置数据

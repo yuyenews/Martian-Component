@@ -1,7 +1,7 @@
 package com.mars.cloud.main.rest.request;
 
 import com.mars.cloud.main.core.util.MarsCloudHttpUtil;
-import com.mars.cloud.main.rest.load.MarsCloudGetServerApis;
+import com.mars.cloud.main.rest.load.MarsCloudServerApis;
 import com.mars.common.util.SerializableUtil;
 
 import java.io.InputStream;
@@ -36,7 +36,7 @@ public class MarsRestTemplate {
         String url = null;
         try {
 
-            url = MarsCloudGetServerApis.getUrl(serverName, methodName);
+            url = MarsCloudServerApis.getUrl(serverName, methodName);
 
             if(params == null){
                 params = new Object[0];
