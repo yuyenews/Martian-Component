@@ -2,6 +2,7 @@ package com.mars.cloud.main.core.util;
 
 import com.mars.cloud.main.core.config.model.enums.Protocol;
 import com.mars.common.util.MarsAddressUtil;
+import com.mars.common.util.StringUtil;
 
 /**
  * 工具类
@@ -28,13 +29,17 @@ public class MarsCloudUtil {
     }
 
     /**
-     * 获取本机在局域网的IP
+     * 获取本机的IP
      *
      * @return ip
      * @throws Exception 异常
      */
     public static String getLocalIp() throws Exception {
-        return MarsAddressUtil.getLocalIp();
+        String ip = MarsCloudConfigUtil.getMarsCloudConfig().getCloudConfig().getIp();
+        if(StringUtil.isNull(ip)){
+            return MarsAddressUtil.getLocalIp();
+        }
+        return ip;
     }
 
     /**

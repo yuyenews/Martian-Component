@@ -35,6 +35,11 @@ public class CloudConfig {
      */
     private Protocol protocol = Protocol.HTTP;
 
+    /**
+     * 本服务的IP，不设置的话默认为本机内网IP
+     */
+    private String ip;
+
     public String getName() {
         return name;
     }
@@ -89,5 +94,13 @@ public class CloudConfig {
 
     public void setProtocol(Protocol protocol) {
         this.protocol = protocol;
+    }
+
+    public String getIp() {
+        return ip;
+    }
+
+    public void setIp(String ip) {
+        this.ip = ip;
     }
 }
