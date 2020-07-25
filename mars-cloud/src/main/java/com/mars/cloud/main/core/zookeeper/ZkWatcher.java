@@ -81,7 +81,7 @@ public class ZkWatcher implements Watcher {
                 /* 重连失败就 再连接一次，务必保证重连成功 */
                 marsLogger.error("zookeeper重连失败，即将重试", e);
                 try {
-                    Thread.sleep(2000);
+                    Thread.sleep(1000);
                 } catch (Exception e2){
                 }
                 continue;
