@@ -57,7 +57,7 @@ public class BalancingManager {
     }
 
     /**
-     * 随机算法
+     * 轮询算法
      *
      * @param urls 参数
      * @return 结果
