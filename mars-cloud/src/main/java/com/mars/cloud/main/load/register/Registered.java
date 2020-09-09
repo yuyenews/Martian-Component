@@ -12,6 +12,7 @@ import com.mars.mvc.model.MarsMappingModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import java.util.HashMap;
 import java.util.Map;
 
 /**
@@ -76,7 +77,7 @@ public class Registered {
         /* 从内存中获取本项目的MarsApi */
         Object apiMap = constants.getAttr(MarsConstant.CONTROLLER_OBJECTS);
         if (apiMap == null) {
-            return null;
+            return new HashMap<>();
         }
         Map<String, MarsMappingModel> marsApiObjects = (Map<String, MarsMappingModel>) apiMap;
         return marsApiObjects;
