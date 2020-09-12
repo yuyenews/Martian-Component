@@ -4,8 +4,8 @@ import com.mars.cloud.main.core.annotation.MarsFeign;
 import com.mars.cloud.main.feign.proxy.FeignProxy;
 import com.mars.common.annotation.api.MarsApi;
 import com.mars.common.annotation.api.MarsInterceptor;
-import com.mars.common.annotation.bean.MarsAfter;
 import com.mars.common.annotation.bean.MarsBean;
+import com.mars.common.annotation.bean.MarsOnLoad;
 import com.mars.common.annotation.jdbc.MarsDao;
 import com.mars.common.constant.MarsConstant;
 import com.mars.common.constant.MarsSpace;
@@ -38,10 +38,10 @@ public class LoadMarsFeign {
             MarsBean marsBean = cls.getAnnotation(MarsBean.class);
             MarsInterceptor marsInterceptor = cls.getAnnotation(MarsInterceptor.class);
             MarsDao marsDao = cls.getAnnotation(MarsDao.class);
-            MarsAfter marsAfter = cls.getAnnotation(MarsAfter.class);
+            MarsOnLoad marsOnLoad = cls.getAnnotation(MarsOnLoad.class);
 
             if ((marsApi != null || marsBean != null || marsInterceptor != null
-                    || marsDao != null || marsAfter != null) && marsFeign != null) {
+                    || marsDao != null || marsOnLoad != null) && marsFeign != null) {
                 throw new Exception("类:["+cls.getName()+"]上不允许有多个Mars注解");
             }
             if (marsFeign != null) {

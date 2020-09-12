@@ -1,18 +1,19 @@
 package com.mars.cloud.main.core.after;
 
 import com.mars.cloud.main.core.util.MarsCloudConfigUtil;
+import com.mars.cloud.main.feign.load.LoadMarsFeign;
 import com.mars.cloud.main.load.start.LoadStart;
 import com.mars.cloud.main.rest.util.MarsCloudParamAndResult;
-import com.mars.common.annotation.bean.MarsAfter;
+import com.mars.common.annotation.bean.MarsOnLoad;
 import com.mars.common.annotation.bean.MarsWrite;
-import com.mars.common.base.BaseAfter;
+import com.mars.common.base.BaseOnLoad;
 import com.mars.iserver.par.factory.ParamAndResultFactory;
 
 /**
  * 在项目启动后加载Cloud配置数据
  */
-@MarsAfter
-public class StartCloudAfter implements BaseAfter {
+@MarsOnLoad
+public class StartCloudAfter implements BaseOnLoad {
 
     /**
      * 启动后加载
@@ -20,13 +21,27 @@ public class StartCloudAfter implements BaseAfter {
     @MarsWrite("loadStart")
     private LoadStart loadStart;
 
+    /**
+     * 框架资源加载前
+     * @throws Exception
+     */
+    @Override
+    public void before() throws Exception {
+        /* 指定 处理参数和响应的对象实例 */
+        ParamAndResultFactory.setBaseParamAndResult(new MarsCloudParamAndResult());
+
+        /* 加载Feign对象 */
+        LoadMarsFeign.LoadCloudFeign();
+    }
+
+    /**
+     * 框架启动后
+     * @throws Exception
+     */
     @Override
     public void after() throws Exception {
         Boolean getWay = MarsCloudConfigUtil.getMarsCloudConfig().getCloudConfig().getGateWay();
         if(!getWay) {
-            /* 指定 处理参数和响应的对象实例 */
-            ParamAndResultFactory.setBaseParamAndResult(new MarsCloudParamAndResult());
-
             /* 注册接口 */
             loadStart.loadApi();
         }
