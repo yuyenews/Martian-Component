@@ -3,7 +3,7 @@ package com.mars.cloud.starter;
 import com.mars.cloud.main.core.config.MarsCloudConfig;
 import com.mars.cloud.starter.startlist.StartFeign;
 import com.mars.common.util.MarsConfiguration;
-import com.mars.jdbc.load.InitJdbc;
+import com.mars.jdbc.core.load.InitJdbc;
 import com.mars.start.base.BaseStartMars;
 import com.mars.start.startmap.StartMap;
 import com.mars.start.startmap.impl.*;

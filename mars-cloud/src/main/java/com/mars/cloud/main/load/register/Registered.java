@@ -8,7 +8,7 @@ import com.mars.common.annotation.bean.MarsBean;
 import com.mars.common.annotation.enums.ReqMethod;
 import com.mars.common.constant.MarsConstant;
 import com.mars.common.constant.MarsSpace;
-import com.mars.mvc.model.MarsMappingModel;
+import com.mars.mvc.load.model.MarsMappingModel;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
