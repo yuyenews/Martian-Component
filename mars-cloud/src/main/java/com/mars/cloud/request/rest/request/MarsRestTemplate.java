@@ -1,7 +1,7 @@
-package com.mars.cloud.main.rest.request;
+package com.mars.cloud.request.rest.request;
 
 import com.mars.cloud.main.core.util.MarsCloudHttpUtil;
-import com.mars.cloud.main.rest.load.MarsCloudServerApis;
+import com.mars.cloud.request.rest.load.MarsCloudServerApis;
 import com.mars.common.util.SerializableUtil;
 
 import java.io.InputStream;

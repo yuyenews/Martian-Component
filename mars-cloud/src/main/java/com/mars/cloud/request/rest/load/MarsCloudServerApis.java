@@ -1,9 +1,9 @@
-package com.mars.cloud.main.rest.load;
+package com.mars.cloud.request.rest.load;
 
 import com.mars.cloud.main.core.cache.MarsCacheApi;
 import com.mars.cloud.main.core.constant.MarsCloudConstant;
 import com.mars.cloud.main.core.zookeeper.ZkHelper;
-import com.mars.cloud.main.rest.manager.BalancingManager;
+import com.mars.cloud.request.rest.manager.BalancingManager;
 
 import java.util.ArrayList;
 import java.util.List;

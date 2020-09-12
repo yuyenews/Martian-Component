@@ -1,9 +1,9 @@
 package com.mars.cloud.main.core.after;
 
 import com.mars.cloud.main.core.util.MarsCloudConfigUtil;
-import com.mars.cloud.main.feign.load.LoadMarsFeign;
+import com.mars.cloud.request.feign.load.LoadMarsFeign;
 import com.mars.cloud.main.load.start.LoadStart;
-import com.mars.cloud.main.rest.util.MarsCloudParamAndResult;
+import com.mars.cloud.request.rest.util.MarsCloudParamAndResult;
 import com.mars.common.annotation.bean.MarsOnLoad;
 import com.mars.common.annotation.bean.MarsWrite;
 import com.mars.common.base.BaseOnLoad;

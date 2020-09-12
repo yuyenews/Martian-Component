@@ -1,7 +1,7 @@
-package com.mars.cloud.main.feign.load;
+package com.mars.cloud.request.feign.load;
 
 import com.mars.cloud.main.core.annotation.MarsFeign;
-import com.mars.cloud.main.feign.proxy.FeignProxy;
+import com.mars.cloud.request.feign.proxy.FeignProxy;
 import com.mars.common.annotation.api.MarsApi;
 import com.mars.common.annotation.api.MarsInterceptor;
 import com.mars.common.annotation.bean.MarsBean;

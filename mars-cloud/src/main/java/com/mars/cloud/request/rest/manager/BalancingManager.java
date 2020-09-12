@@ -1,4 +1,4 @@
-package com.mars.cloud.main.rest.manager;
+package com.mars.cloud.request.rest.manager;
 
 import com.mars.cloud.main.core.config.model.enums.Strategy;
 import com.mars.cloud.main.core.util.MarsCloudConfigUtil;

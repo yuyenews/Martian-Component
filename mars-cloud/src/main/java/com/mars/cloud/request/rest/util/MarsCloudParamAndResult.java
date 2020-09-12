@@ -1,4 +1,4 @@
-package com.mars.cloud.main.rest.util;
+package com.mars.cloud.request.rest.util;
 
 import com.mars.cloud.main.core.constant.MarsCloudConstant;
 import com.mars.common.constant.MarsConstant;
