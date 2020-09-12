@@ -1,4 +1,4 @@
-package com.mars.cloud.main.core.after;
+package com.mars.cloud.main.core.onload;
 
 import com.mars.cloud.main.core.util.MarsCloudConfigUtil;
 import com.mars.cloud.request.feign.load.LoadMarsFeign;
@@ -13,7 +13,7 @@ import com.mars.iserver.par.factory.ParamAndResultFactory;
  * 在项目启动后加载Cloud配置数据
  */
 @MarsOnLoad
-public class StartCloudAfter implements BaseOnLoad {
+public class MarsCloudOnLoad implements BaseOnLoad {
 
     /**
      * 启动后加载
