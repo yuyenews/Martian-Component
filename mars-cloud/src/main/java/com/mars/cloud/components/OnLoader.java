@@ -1,6 +1,7 @@
 package com.mars.cloud.components;
 
-import com.mars.cloud.core.register.Register;
+import com.mars.cloud.core.register.Registered;
+import com.mars.cloud.core.reload.ReloadServerCache;
 import com.mars.cloud.request.feign.load.LoadMarsFeign;
 import com.mars.cloud.request.rest.util.MarsCloudParamAndResult;
 import com.mars.common.annotation.bean.MarsOnLoad;
@@ -32,8 +33,8 @@ public class OnLoader implements BaseOnLoad {
      */
     @Override
     public void after() throws Exception {
-        // 注册服务
-        Register register = new Register();
-        register.doRegister();
+        /* 注册服务 */
+        Registered registered = new Registered();
+        registered.doRegister();
     }
 }

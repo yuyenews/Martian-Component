@@ -16,10 +16,10 @@
 <br/>
 
 ## mars-cloud
-This is a distributed component that can be used to develop distributed applications based on Mars-java
+这是一个分布式组件，可以用来开发基于Mars-java的分布式应用
 
-## mars-extends
-This is an extension package, mainly used to provide tools
+## mars-gateway
+这是一个网关，跟mars-cloud配合使用，实现请求转发
 
-## mars-dblite
-A small data persistence component that can be used as a local small database
+## mars-cp-base
+公共包，目前还没正式使用，且里面的类几乎为0

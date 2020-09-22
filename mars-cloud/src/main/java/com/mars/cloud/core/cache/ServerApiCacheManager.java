@@ -16,6 +16,17 @@ public class ServerApiCacheManager {
     private final String REST_API_KEY = "restApiKey";
 
     /**
+     * 根据服务名称和方法名称获取接口集
+     * @param serverName
+     * @param methodName
+     * @return
+     */
+    public List<RestApiCacheModel> getRestApiCacheModelList(String serverName, String methodName){
+        Map<String, List<RestApiCacheModel>> restApiModelMap = getRestApiModelsByKey();
+        return restApiModelMap.get(getKey(serverName,methodName));
+    }
+
+    /**
      * 添加服务缓存
      * @param serverName
      * @param methodName
@@ -31,10 +42,10 @@ public class ServerApiCacheManager {
         }
         if(contains(restApiCacheModelList, restApiCacheModel)){
             restApiCacheModelList.add(restApiCacheModel);
-        }
-        restApiModelMap.put(key, restApiCacheModelList);
 
-        marsContext.setAttr(REST_API_KEY, restApiModelMap);
+            restApiModelMap.put(key, restApiCacheModelList);
+            marsContext.setAttr(REST_API_KEY, restApiModelMap);
+        }
     }
 
     /**
