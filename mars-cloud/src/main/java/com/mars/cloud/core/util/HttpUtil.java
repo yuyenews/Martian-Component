@@ -1,4 +1,4 @@
-package com.mars.cloud.request.util;
+package com.mars.cloud.core.util;
 
 import com.mars.cloud.core.cache.model.RestApiCacheModel;
 

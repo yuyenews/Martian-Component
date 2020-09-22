@@ -3,7 +3,7 @@ package com.mars.cloud.request.rest.request;
 import com.mars.cloud.core.cache.ServerApiCache;
 import com.mars.cloud.core.cache.model.RestApiCacheModel;
 import com.mars.cloud.fuse.FuseManager;
-import com.mars.cloud.request.util.HttpUtil;
+import com.mars.cloud.core.util.HttpUtil;
 import com.mars.common.util.SerializableUtil;
 
 import java.io.InputStream;

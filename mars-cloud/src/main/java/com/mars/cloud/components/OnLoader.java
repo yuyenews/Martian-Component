@@ -2,7 +2,7 @@ package com.mars.cloud.components;
 
 import com.mars.cloud.core.register.Register;
 import com.mars.cloud.request.feign.load.LoadMarsFeign;
-import com.mars.cloud.request.util.MarsCloudParamAndResult;
+import com.mars.cloud.request.rest.util.MarsCloudParamAndResult;
 import com.mars.common.annotation.bean.MarsOnLoad;
 import com.mars.common.base.BaseOnLoad;
 import com.mars.iserver.par.factory.ParamAndResultFactory;
