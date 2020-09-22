@@ -1,6 +1,6 @@
 package com.mars.cloud.request.feign.proxy;
 
-import com.mars.cloud.main.core.annotation.MarsFeign;
+import com.mars.cloud.core.annotation.MarsFeign;
 import com.mars.cloud.request.rest.request.MarsRestTemplate;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
