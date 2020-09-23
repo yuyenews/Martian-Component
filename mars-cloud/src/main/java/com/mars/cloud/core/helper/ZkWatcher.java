@@ -17,7 +17,6 @@ public class ZkWatcher implements Watcher {
 
     private static Logger marsLogger = LoggerFactory.getLogger(ZkWatcher.class);
 
-
     private CountDownLatch countDownLatch;
 
     public ZkWatcher(CountDownLatch countDownLatch) {
@@ -36,11 +35,11 @@ public class ZkWatcher implements Watcher {
                 case Expired:
                     /* 超时重连 */
                     reConnectionZookeeper();
-                    break;
+                    return;
                 case SyncConnected:
                     /* 连接成功 */
                     countDownLatch.countDown();
-                    break;
+                    return;
             }
 
             /* 注册中心的接口有了变化，就刷新本地缓存 */
@@ -51,7 +50,7 @@ public class ZkWatcher implements Watcher {
                 case NodeDataChanged:
                     /* 刷新本地缓存 */
                     refreshCacheApi();
-                    break;
+                    return;
             }
         } catch (Exception e) {
             marsLogger.error("处理zookeeper的通知时出错", e);
