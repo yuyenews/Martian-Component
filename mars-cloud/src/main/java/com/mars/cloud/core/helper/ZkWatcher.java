@@ -2,7 +2,6 @@ package com.mars.cloud.core.helper;
 
 import com.mars.cloud.core.register.Registered;
 import com.mars.cloud.core.cache.LoadServerCache;
-import com.mars.ioc.factory.BeanFactory;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
 import org.slf4j.Logger;
@@ -67,7 +66,7 @@ public class ZkWatcher implements Watcher {
 
                 /* 重连并注册 */
                 ZkHelper.openConnection();
-                Registered registered = BeanFactory.getBean("registered", Registered.class);
+                Registered registered = new Registered();
                 registered.doRegister();
 
                 /* 刷新本地缓存 */
