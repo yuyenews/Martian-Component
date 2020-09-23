@@ -1,6 +1,5 @@
 package com.mars.cloud.request.rest.request;
 
-import com.mars.cloud.core.cache.ServerApiCacheManager;
 import com.mars.cloud.core.cache.model.RestApiCacheModel;
 import com.mars.cloud.fuse.FuseManager;
 import com.mars.cloud.core.util.HttpUtil;

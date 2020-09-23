@@ -2,6 +2,8 @@ package com.mars.cloud.request.balanced;
 
 import com.mars.cloud.core.cache.ServerApiCacheManager;
 import com.mars.cloud.core.cache.model.RestApiCacheModel;
+import com.mars.cloud.core.config.model.enums.Strategy;
+import com.mars.cloud.core.util.MarsCloudConfigUtil;
 
 import java.util.List;
 
@@ -19,9 +21,8 @@ public class BalancedManager {
      */
     public static RestApiCacheModel getRestApiCacheModel(String serverName, String methodName) throws Exception {
         List<RestApiCacheModel> restApiCacheModelList = ServerApiCacheManager.getRestApiModelForCache(serverName, methodName);
-        // TODO
-        return null;
+
+        BalancedCalc balancedCalc = BalancedFactory.getBalancedCalc();
+        return balancedCalc.getRestApiCacheModel(serverName,methodName,restApiCacheModelList);
     }
-
-
 }

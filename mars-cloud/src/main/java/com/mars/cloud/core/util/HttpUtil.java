@@ -1,19 +1,30 @@
 package com.mars.cloud.core.util;
 
+import com.alibaba.fastjson.JSON;
+import com.alibaba.fastjson.JSONObject;
 import com.mars.cloud.core.annotation.enums.ContentType;
 import com.mars.cloud.core.cache.model.RestApiCacheModel;
 import com.mars.cloud.core.constant.MarsCloudConstant;
+import com.mars.cloud.request.rest.model.RequestParamModel;
+import com.mars.cloud.request.rest.util.ParamConversionUtil;
 import com.mars.common.annotation.enums.ReqMethod;
 import com.mars.common.util.SerializableUtil;
+import com.mars.server.server.request.model.MarsFileUpLoad;
 import okhttp3.*;
 
 import java.io.InputStream;
+import java.util.List;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
 /**
  * HTTP请求工具类
  */
 public class HttpUtil {
+
+    private static final String CONTENT_TYPE_JSON = "application/json;charset=UTF-8";
+
+    private static final String FORM_DATA = "multipart/form-data";
 
     /**
      * 发起请求
@@ -45,19 +56,33 @@ public class HttpUtil {
      * @throws Exception
      */
     private static InputStream formData(RestApiCacheModel restApiModel, Object[] params) throws Exception {
-        /* 将参数序列化成byte[] */
-        byte[] param = SerializableUtil.serialization(params);
 
         OkHttpClient okHttpClient = getOkHttpClient();
 
         /* 发起post请求 将数据传递过去 */
-        MediaType formData = MediaType.parse("multipart/form-data");
+        MediaType formData = MediaType.parse(FORM_DATA);
 
         MultipartBody.Builder builder = new MultipartBody.Builder();
         builder.setType(formData);
-        // TODO
-        RequestBody fileBody = RequestBody.create(MediaType.parse("application/octet-stream"), param);
-        builder.addFormDataPart(MarsCloudConstant.PARAM, "params", fileBody);
+
+        /* 将参数转成统一规格的对象，进行下面的传参操作 */
+        Map<String, RequestParamModel> requestParamModelMap = ParamConversionUtil.getRequestParamModelList(params);
+        for(RequestParamModel requestParamModel : requestParamModelMap.values()){
+            if(requestParamModel.isFile()){
+                // 如果是文件
+                Map<String, MarsFileUpLoad> marsFileUpLoadMap = requestParamModel.getMarsFileUpLoads();
+
+                for(MarsFileUpLoad marsFileUpLoad : marsFileUpLoadMap.values()){
+                    byte[] file = ParamConversionUtil.toByteArray(marsFileUpLoad.getInputStream());
+
+                    RequestBody fileBody = RequestBody.create(file, MediaType.parse("application/octet-stream"));
+                    builder.addFormDataPart(requestParamModel.getName(), marsFileUpLoad.getFileName(), fileBody);
+                }
+            } else {
+                // 如果不是文件
+                builder.addFormDataPart(requestParamModel.getName(), requestParamModel.getValue().toString());
+            }
+        }
 
         Request request = new Request.Builder()
                 .post(builder.build())
@@ -73,9 +98,23 @@ public class HttpUtil {
      * @param params
      * @return
      */
-    private static InputStream formPost(RestApiCacheModel restApiModel, Object[] params){
-        // TODO
-        return null;
+    private static InputStream formPost(RestApiCacheModel restApiModel, Object[] params) throws Exception {
+        OkHttpClient okHttpClient = getOkHttpClient();
+
+        JSONObject jsonParam = ParamConversionUtil.conversionToJson(params);
+
+        FormBody.Builder formBodyBuilder = new FormBody.Builder();
+        for(String key : jsonParam.keySet()) {
+            formBodyBuilder.add(key,jsonParam.getString(key));
+        }
+        FormBody formBody = formBodyBuilder.build();
+        Request request = new Request
+                .Builder()
+                .post(formBody)
+                .url(restApiModel.getUrl())
+                .build();
+
+        return okCall(okHttpClient, request);
     }
 
     /**
@@ -84,9 +123,34 @@ public class HttpUtil {
      * @param params
      * @return
      */
-    private static InputStream formGet(RestApiCacheModel restApiModel, Object[] params){
-        // TODO
-        return null;
+    private static InputStream formGet(RestApiCacheModel restApiModel, Object[] params) throws Exception {
+        OkHttpClient okHttpClient = getOkHttpClient();
+
+        JSONObject jsonParam = ParamConversionUtil.conversionToJson(params);
+
+        StringBuffer paramStr = new StringBuffer();
+
+        boolean isFirst = true;
+        for(String key : jsonParam.keySet()) {
+            if(isFirst){
+                paramStr.append("?");
+            } else {
+                paramStr.append("&");
+            }
+            paramStr.append(key);
+            paramStr.append("=");
+            paramStr.append(jsonParam.getString(key));
+
+            isFirst = false;
+        }
+
+        Request request = new Request
+                .Builder()
+                .get()
+                .url(restApiModel.getUrl() + paramStr.toString())
+                .build();
+
+        return okCall(okHttpClient, request);
     }
 
     /**
@@ -95,11 +159,26 @@ public class HttpUtil {
      * @param params
      * @return
      */
-    private static InputStream json(RestApiCacheModel restApiModel, Object[] params){
-        // TODO
-        return null;
-    }
+    private static InputStream json(RestApiCacheModel restApiModel, Object[] params) throws Exception {
+        String jsonStrParam = "{}";
+        JSONObject jsonParam = ParamConversionUtil.conversionToJson(params);
+        if (jsonParam != null) {
+            jsonStrParam = jsonParam.toJSONString();
+        }
 
+        OkHttpClient okHttpClient = getOkHttpClient();
+
+        MediaType mediaType = MediaType.parse(CONTENT_TYPE_JSON);
+
+        RequestBody requestbody = RequestBody.create(jsonStrParam, mediaType);
+        Request request = new Request
+                .Builder()
+                .post(requestbody)
+                .url(restApiModel.getUrl())
+                .build();
+
+        return okCall(okHttpClient, request);
+    }
 
     /**
      * 开始请求
