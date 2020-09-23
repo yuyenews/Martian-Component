@@ -1,16 +1,15 @@
 package com.mars.cloud.request.rest.util;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.mars.cloud.request.rest.model.RequestParamModel;
+import com.mars.common.util.StringUtil;
 import com.mars.server.server.request.model.MarsFileUpLoad;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
 import java.lang.reflect.Field;
-import java.util.ArrayList;
+import java.lang.reflect.Modifier;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -32,7 +31,15 @@ public class ParamConversionUtil {
             Field[] fields = cls.getDeclaredFields();
             for(Field field : fields){
                 field.setAccessible(true);
-                jsonParam.put(field.getName(), field.get(param));
+
+                if(Modifier.isFinal(field.getModifiers())){
+                    continue;
+                }
+                Object val = field.get(param);
+                if(StringUtil.isNull(val)){
+                    continue;
+                }
+                jsonParam.put(field.getName(), val);
             }
         }
         return jsonParam;
@@ -56,6 +63,12 @@ public class ParamConversionUtil {
 
             for (Object par : params) {
                 for (Field field : fields) {
+                    field.setAccessible(true);
+
+                    if(Modifier.isFinal(field.getModifiers())){
+                        continue;
+                    }
+
                     RequestParamModel requestParamModel = getRequestParamModel(par, field);
                     if (requestParamModel == null) {
                         continue;
@@ -111,7 +124,6 @@ public class ParamConversionUtil {
      */
     private static Object getFieldValue(Object param, Field field){
         try {
-            field.setAccessible(true);
             return field.get(param);
         } catch (Exception e){
             return null;

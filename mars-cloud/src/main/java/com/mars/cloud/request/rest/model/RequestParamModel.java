@@ -2,9 +2,7 @@ package com.mars.cloud.request.rest.model;
 
 import com.mars.server.server.request.model.MarsFileUpLoad;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 /**

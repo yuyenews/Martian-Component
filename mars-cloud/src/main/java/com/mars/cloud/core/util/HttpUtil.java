@@ -1,19 +1,18 @@
 package com.mars.cloud.core.util;
 
-import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.mars.cloud.core.annotation.enums.ContentType;
 import com.mars.cloud.core.cache.model.RestApiCacheModel;
-import com.mars.cloud.core.constant.MarsCloudConstant;
 import com.mars.cloud.request.rest.model.RequestParamModel;
 import com.mars.cloud.request.rest.util.ParamConversionUtil;
 import com.mars.common.annotation.enums.ReqMethod;
-import com.mars.common.util.SerializableUtil;
+import com.mars.common.constant.MarsConstant;
+import com.mars.common.util.StringUtil;
 import com.mars.server.server.request.model.MarsFileUpLoad;
 import okhttp3.*;
 
 import java.io.InputStream;
-import java.util.List;
+import java.net.URLEncoder;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 
@@ -33,17 +32,20 @@ public class HttpUtil {
      * @return
      */
     public static InputStream request(RestApiCacheModel restApiCacheModel, Object[] params, ContentType contentType) throws Exception{
+        if(restApiCacheModel.getReqMethod().equals(ReqMethod.GET) && !contentType.equals(ContentType.FORM)){
+            throw new Exception("请求的接口，请求方式为GET，所以ContentType只能为FORM，接口名:" + restApiCacheModel.getUrl());
+        }
         if(restApiCacheModel.getReqMethod().equals(ReqMethod.GET)){
             return formGet(restApiCacheModel, params);
         } else {
-            if(contentType.equals(ContentType.FORM.getCode())){
+            if(contentType.equals(ContentType.FORM)){
                 return formPost(restApiCacheModel,params);
-            } else if(contentType.equals(ContentType.FORM_DATA.getCode())){
+            } else if(contentType.equals(ContentType.FORM_DATA)){
                 return formData(restApiCacheModel,params);
-            } else if(contentType.equals(ContentType.JSON.getCode())){
+            } else if(contentType.equals(ContentType.JSON)){
                 return json(restApiCacheModel,params);
             } else {
-                throw new Exception("请求的接口，ContentType未知，接口名:" + restApiCacheModel.getUrl());
+                throw new Exception("请求的接口ContentType未知，接口名:" + restApiCacheModel.getUrl());
             }
         }
     }
@@ -76,16 +78,25 @@ public class HttpUtil {
                     byte[] file = ParamConversionUtil.toByteArray(marsFileUpLoad.getInputStream());
 
                     RequestBody fileBody = RequestBody.create(file, MediaType.parse("application/octet-stream"));
-                    builder.addFormDataPart(requestParamModel.getName(), marsFileUpLoad.getFileName(), fileBody);
+                    builder.addFormDataPart(marsFileUpLoad.getName(), marsFileUpLoad.getFileName(), fileBody);
                 }
             } else {
                 // 如果不是文件
-                builder.addFormDataPart(requestParamModel.getName(), requestParamModel.getValue().toString());
+                Object val = requestParamModel.getValue();
+                if(val == null){
+                    continue;
+                }
+                if(val instanceof String[]){
+                    String[] valStr = (String[])val;
+                    for(String str : valStr){
+                        builder.addFormDataPart(requestParamModel.getName(), str);
+                    }
+                } else {
+                    builder.addFormDataPart(requestParamModel.getName(), val.toString());
+                }
             }
         }
-
-        Request request = new Request.Builder()
-                .post(builder.build())
+        Request request = getRequestBuilder(restApiModel,builder.build())
                 .url(restApiModel.getUrl())
                 .build();
 
@@ -105,12 +116,26 @@ public class HttpUtil {
 
         FormBody.Builder formBodyBuilder = new FormBody.Builder();
         for(String key : jsonParam.keySet()) {
-            formBodyBuilder.add(key,jsonParam.getString(key));
+            Object val = jsonParam.get(key);
+            if(StringUtil.isNull(val)){
+                continue;
+            }
+
+            if(val instanceof String[]){
+                String[] paramStr = (String[])val;
+                if(paramStr == null){
+                    continue;
+                }
+                for(String str : paramStr){
+                    formBodyBuilder.add(key, str);
+                }
+            } else {
+                formBodyBuilder.add(key, val.toString());
+            }
         }
-        FormBody formBody = formBodyBuilder.build();
-        Request request = new Request
-                .Builder()
-                .post(formBody)
+
+        RequestBody formBody = formBodyBuilder.build();
+        Request request = getRequestBuilder(restApiModel,formBody)
                 .url(restApiModel.getUrl())
                 .build();
 
@@ -132,14 +157,40 @@ public class HttpUtil {
 
         boolean isFirst = true;
         for(String key : jsonParam.keySet()) {
+            Object val = jsonParam.get(key);
+            if(StringUtil.isNull(val)){
+                continue;
+            }
+
             if(isFirst){
                 paramStr.append("?");
             } else {
                 paramStr.append("&");
             }
-            paramStr.append(key);
-            paramStr.append("=");
-            paramStr.append(jsonParam.getString(key));
+
+            if(val instanceof String[]){
+                String[] paramStrings = (String[])val;
+                if(paramStrings == null){
+                    continue;
+                }
+                for(int i = 0; i < paramStrings.length; i++){
+                    String va = paramStrings[i];
+                    if(StringUtil.isNull(va)){
+                        continue;
+                    }
+                    String pStr = paramStr.toString();
+                    if(i > 0 && !pStr.endsWith("?") && !pStr.endsWith("&")){
+                        paramStr.append("&");
+                    }
+                    paramStr.append(key);
+                    paramStr.append("=");
+                    paramStr.append(URLEncoder.encode(va, MarsConstant.ENCODING));
+                }
+            } else {
+                paramStr.append(key);
+                paramStr.append("=");
+                paramStr.append(URLEncoder.encode(val.toString(), MarsConstant.ENCODING));
+            }
 
             isFirst = false;
         }
@@ -171,13 +222,35 @@ public class HttpUtil {
         MediaType mediaType = MediaType.parse(CONTENT_TYPE_JSON);
 
         RequestBody requestbody = RequestBody.create(jsonStrParam, mediaType);
-        Request request = new Request
-                .Builder()
-                .post(requestbody)
+        Request request = getRequestBuilder(restApiModel,requestbody)
                 .url(restApiModel.getUrl())
                 .build();
 
         return okCall(okHttpClient, request);
+    }
+
+    /**
+     * 根据接口的请求方式，返回不同的Builder
+     * @param restApiModel
+     * @param requestBody
+     * @return
+     */
+    private static Request.Builder getRequestBuilder(RestApiCacheModel restApiModel, RequestBody requestBody){
+        Request.Builder builder = new Request.Builder();
+
+        switch (restApiModel.getReqMethod()){
+            case POST:
+                builder.post(requestBody);
+                break;
+            case PUT:
+                builder.put(requestBody);
+                break;
+            case DELETE:
+                builder.delete(requestBody);
+                break;
+        }
+
+        return builder;
     }
 
     /**
@@ -207,11 +280,23 @@ public class HttpUtil {
      * @throws Exception 异常
      */
     private static OkHttpClient getOkHttpClient() throws Exception {
-        long timeOut = MarsCloudConfigUtil.getMarsCloudConfig().getCloudConfig().getTimeOut();
+        long timeOut = getTimeOut();
         OkHttpClient okHttpClient = new OkHttpClient.Builder()
                 .connectTimeout(timeOut, TimeUnit.SECONDS)//设置连接超时时间
                 .readTimeout(timeOut, TimeUnit.SECONDS)//设置读取超时时间
                 .build();
         return okHttpClient;
+    }
+
+    /**
+     * 从配置中获取超时时间
+     * @return
+     */
+    private static long getTimeOut(){
+        try {
+            return MarsCloudConfigUtil.getMarsCloudConfig().getCloudConfig().getTimeOut();
+        } catch (Exception e){
+            return 100L;
+        }
     }
 }

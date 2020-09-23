@@ -19,9 +19,6 @@ public class OnLoader implements BaseOnLoad {
      */
     @Override
     public void before() throws Exception {
-        /* 指定 处理参数和响应的对象实例 */
-        ParamAndResultFactory.setBaseParamAndResult(new MarsCloudParamAndResult());
-
         /* 加载Feign对象 */
         LoadMarsFeign.LoadCloudFeign();
     }
@@ -32,6 +29,9 @@ public class OnLoader implements BaseOnLoad {
      */
     @Override
     public void after() throws Exception {
+        /* 指定 处理参数和响应的对象实例 */
+        ParamAndResultFactory.setBaseParamAndResult(new MarsCloudParamAndResult());
+
         /* 注册服务 */
         Registered registered = new Registered();
         registered.doRegister();

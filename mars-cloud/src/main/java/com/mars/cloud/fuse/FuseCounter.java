@@ -28,7 +28,7 @@ public class FuseCounter {
      */
     private static void init() throws Exception {
         if(fuseConfig == null && !isInit){
-            fuseConfig = MarsCloudConfigUtil.getMarsCloudConfig().getFuseConfig();
+            // fuseConfig = MarsCloudConfigUtil.getMarsCloudConfig().getFuseConfig();
             isInit = true;
         }
     }
@@ -79,6 +79,9 @@ public class FuseCounter {
      */
     public static void addFailNum(RestApiCacheModel restApiCacheModel) throws Exception{
         init();
+        if(fuseConfig == null){
+            return;
+        }
 
         Map<String, FuseModel> fuseMap = getFuseMap();
         FuseModel fuseModel = fuseMap.get(restApiCacheModel.getUrl());
@@ -95,6 +98,9 @@ public class FuseCounter {
      */
     public static void addFuseNum(RestApiCacheModel restApiCacheModel) throws Exception{
         init();
+        if(fuseConfig == null){
+            return;
+        }
 
         Map<String, FuseModel> fuseMap = getFuseMap();
         FuseModel fuseModel = fuseMap.get(restApiCacheModel.getUrl());
@@ -111,6 +117,9 @@ public class FuseCounter {
      */
     public static void clearFailNum(RestApiCacheModel restApiCacheModel) throws Exception{
         init();
+        if(fuseConfig == null){
+            return;
+        }
 
         Map<String, FuseModel> fuseMap = getFuseMap();
         FuseModel fuseModel = fuseMap.get(restApiCacheModel.getUrl());
