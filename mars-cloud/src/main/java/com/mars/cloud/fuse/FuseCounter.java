@@ -20,13 +20,16 @@ public class FuseCounter {
 
     private static FuseConfig fuseConfig;
 
+    private static boolean isInit = false;
+
     /**
      * 初始化
      * @throws Exception
      */
     private static void init() throws Exception {
-        if(fuseConfig == null){
+        if(fuseConfig == null && !isInit){
             fuseConfig = MarsCloudConfigUtil.getMarsCloudConfig().getFuseConfig();
+            isInit = true;
         }
     }
 
@@ -53,6 +56,9 @@ public class FuseCounter {
      */
     public static boolean isFuse(RestApiCacheModel restApiCacheModel) throws Exception{
         init();
+        if(fuseConfig == null){
+            return true;
+        }
 
         Map<String, FuseModel> fuseMap = getFuseMap();
         FuseModel fuseModel = fuseMap.get(restApiCacheModel.getUrl());
