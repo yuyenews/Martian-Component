@@ -1,9 +1,10 @@
 package com.mars.cloud.request.rest.request;
 
-import com.mars.cloud.core.cache.ServerApiCache;
+import com.mars.cloud.core.cache.ServerApiCacheManager;
 import com.mars.cloud.core.cache.model.RestApiCacheModel;
 import com.mars.cloud.fuse.FuseManager;
 import com.mars.cloud.core.util.HttpUtil;
+import com.mars.cloud.request.balanced.BalancedManager;
 import com.mars.common.util.SerializableUtil;
 
 import java.io.InputStream;
@@ -38,7 +39,7 @@ public class MarsRestTemplate {
         RestApiCacheModel restApiCacheModel = null;
         try {
 
-            restApiCacheModel = ServerApiCache.getRestApiModelForCache(serverName, methodName);
+            restApiCacheModel = BalancedManager.getRestApiCacheModel(serverName, methodName);
 
             if(params == null){
                 params = new Object[0];
@@ -48,16 +49,14 @@ public class MarsRestTemplate {
             boolean isFuse =  FuseManager.isFuse(restApiCacheModel);
             if(isFuse){
                 InputStream inputStream = HttpUtil.request(restApiCacheModel, params);
-                T result = SerializableUtil.deSerialization(inputStream, resultType);
-
                 /* 由于要连续请求失败到一定次数，才会熔断，所以请求成功就清除错误次数 */
                 FuseManager.clearFailNum(restApiCacheModel);
 
-                return result;
+                return SerializableUtil.deSerialization(inputStream, resultType);
             } else {
                 /* 如果熔断了就拒绝请求，并记录拒绝次数，让熔断器来判断是否进入半熔断状态 */
                 FuseManager.addFuseNum(restApiCacheModel);
-                throw new Exception("");
+                throw new Exception("此接口已被熔断，一段时间后将会重新开放");
             }
         } catch (Exception e) {
             /* 如果请求失败，就记录次数，用来给熔断器判断 是否进入熔断状态 */

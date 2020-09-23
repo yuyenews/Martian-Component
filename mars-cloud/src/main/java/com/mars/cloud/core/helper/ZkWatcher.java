@@ -1,7 +1,7 @@
 package com.mars.cloud.core.helper;
 
 import com.mars.cloud.core.register.Registered;
-import com.mars.cloud.core.reload.ReloadServerCache;
+import com.mars.cloud.core.cache.LoadServerCache;
 import com.mars.ioc.factory.BeanFactory;
 import org.apache.zookeeper.WatchedEvent;
 import org.apache.zookeeper.Watcher;
@@ -91,8 +91,8 @@ public class ZkWatcher implements Watcher {
      */
     private void refreshCacheApi() {
         try {
-            ReloadServerCache reloadServerCache = new ReloadServerCache();
-            reloadServerCache.doReload();
+            LoadServerCache loadServerCache = new LoadServerCache();
+            loadServerCache.doLoad();
             return;
         } catch (Exception e) {
             /*

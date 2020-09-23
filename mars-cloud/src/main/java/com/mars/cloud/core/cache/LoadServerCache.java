@@ -1,7 +1,6 @@
-package com.mars.cloud.core.reload;
+package com.mars.cloud.core.cache;
 
 import com.alibaba.fastjson.JSON;
-import com.mars.cloud.core.cache.ServerApiCacheManager;
 import com.mars.cloud.core.cache.model.RestApiCacheModel;
 import com.mars.cloud.core.constant.MarsCloudConstant;
 import com.mars.cloud.core.helper.ZkHelper;
@@ -14,16 +13,16 @@ import java.util.concurrent.ConcurrentHashMap;
 /**
  * 刷新本地服务缓存
  */
-public class ReloadServerCache {
+public class LoadServerCache {
 
-    private ServerApiCacheManager serverApiCacheManager = new ServerApiCacheManager();
+    private ServerApiCache serverApiCache = new ServerApiCache();
 
     /**
-     * 10秒刷新一次
+     * 从注册中心读取接口，放入本地缓存
      */
-    public void doReload() throws Exception {
+    public void doLoad() throws Exception {
         Map<String, List<RestApiCacheModel>> restApiModelMap = doRefreshCacheApi();
-        serverApiCacheManager.saveCache(restApiModelMap);
+        serverApiCache.saveCache(restApiModelMap);
     }
 
     /**

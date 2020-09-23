@@ -9,8 +9,8 @@ public class FuseManager {
      * @param restApiCacheModel
      * @return
      */
-    public static boolean isFuse(RestApiCacheModel restApiCacheModel){
-        return false;
+    public static boolean isFuse(RestApiCacheModel restApiCacheModel) throws Exception {
+        return FuseCounter.isFuse(restApiCacheModel);
     }
 
     /**
@@ -18,8 +18,8 @@ public class FuseManager {
      * @param restApiCacheModel
      * @return
      */
-    public static boolean addFailNum(RestApiCacheModel restApiCacheModel){
-        return false;
+    public static synchronized void addFailNum(RestApiCacheModel restApiCacheModel) throws Exception {
+        FuseCounter.addFailNum(restApiCacheModel);
     }
 
     /**
@@ -27,8 +27,8 @@ public class FuseManager {
      * @param restApiCacheModel
      * @return
      */
-    public static boolean addFuseNum(RestApiCacheModel restApiCacheModel){
-        return false;
+    public static synchronized void addFuseNum(RestApiCacheModel restApiCacheModel) throws Exception {
+        FuseCounter.addFuseNum(restApiCacheModel);
     }
 
     /**
@@ -36,7 +36,7 @@ public class FuseManager {
      * @param restApiCacheModel
      * @return
      */
-    public static boolean clearFailNum(RestApiCacheModel restApiCacheModel){
-        return false;
+    public static synchronized void clearFailNum(RestApiCacheModel restApiCacheModel) throws Exception {
+        FuseCounter.clearFailNum(restApiCacheModel);
     }
 }

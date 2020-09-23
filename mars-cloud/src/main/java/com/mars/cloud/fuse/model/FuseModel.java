@@ -1,19 +1,19 @@
-package com.mars.cloud.core.config.model;
+package com.mars.cloud.fuse.model;
 
 /**
- * 熔断器配置
+ * 熔断器，计数实体类
  */
-public class FuseConfig {
+public class FuseModel {
 
     /**
      * 失败多少次就熔断
      */
-    private Long failNum;
+    private Long failNum = 0L;
 
     /**
      * 熔断后被请求多少次后，进入半熔断状态
      */
-    private Long fuseNum;
+    private Long fuseNum = 0L;
 
     public Long getFailNum() {
         return failNum;

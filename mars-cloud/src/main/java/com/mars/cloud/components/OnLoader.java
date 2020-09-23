@@ -1,7 +1,6 @@
 package com.mars.cloud.components;
 
 import com.mars.cloud.core.register.Registered;
-import com.mars.cloud.core.reload.ReloadServerCache;
 import com.mars.cloud.request.feign.load.LoadMarsFeign;
 import com.mars.cloud.request.rest.util.MarsCloudParamAndResult;
 import com.mars.common.annotation.bean.MarsOnLoad;

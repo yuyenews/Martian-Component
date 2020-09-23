@@ -1,100 +1,38 @@
 package com.mars.cloud.core.cache;
 
 import com.mars.cloud.core.cache.model.RestApiCacheModel;
-import com.mars.common.constant.MarsSpace;
-import com.mars.server.server.request.HttpMarsContext;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 
+/**
+ * 服务的本地缓存，从naco获取接口列表保存到本地
+ */
 public class ServerApiCacheManager {
 
-    private MarsSpace marsContext = MarsSpace.getEasySpace();
+    private static ServerApiCache serverApiCache = new ServerApiCache();
 
-    private final String REST_API_KEY = "restApiKey";
+    private static LoadServerCache loadServerCache = new LoadServerCache();
 
     /**
-     * 根据服务名称和方法名称获取接口集
+     * 获取
      * @param serverName
      * @param methodName
      * @return
      */
-    public List<RestApiCacheModel> getRestApiCacheModelList(String serverName, String methodName){
-        Map<String, List<RestApiCacheModel>> restApiModelMap = getRestApiModelsByKey();
-        return restApiModelMap.get(getKey(serverName,methodName));
-    }
-
-    /**
-     * 添加服务缓存
-     * @param serverName
-     * @param methodName
-     * @param restApiCacheModel
-     */
-    public void addCache(String serverName, String methodName, RestApiCacheModel restApiCacheModel){
-        Map<String, List<RestApiCacheModel>> restApiModelMap = getRestApiModelsByKey();
-        String key = getKey(serverName,methodName);
-
-        List<RestApiCacheModel> restApiCacheModelList = restApiModelMap.get(key);
-        if(restApiCacheModelList == null){
-            restApiCacheModelList = new ArrayList<>();
-        }
-        if(contains(restApiCacheModelList, restApiCacheModel)){
-            restApiCacheModelList.add(restApiCacheModel);
-
-            restApiModelMap.put(key, restApiCacheModelList);
-            marsContext.setAttr(REST_API_KEY, restApiModelMap);
-        }
-    }
-
-    /**
-     * 替换所有的本地服务缓存
-     * @param restApiModelMap
-     */
-    public void saveCache(Map<String, List<RestApiCacheModel>> restApiModelMap){
-        marsContext.remove(REST_API_KEY);
-        marsContext.setAttr(REST_API_KEY, restApiModelMap);
-    }
-
-    /**
-     * 获取本地的所有服务缓存
-     * @return
-     */
-    public Map<String, List<RestApiCacheModel>> getRestApiModelsByKey(){
-        Map<String, List<RestApiCacheModel>> restApiModelMap = new ConcurrentHashMap<>();
-        Object objs = marsContext.getAttr(REST_API_KEY);
-        if(objs != null){
-            restApiModelMap = (Map<String, List<RestApiCacheModel>>)objs;
-        }
-        return restApiModelMap;
-    }
-
-    /**
-     * 获取key
-     * @param serverName
-     * @param methodName
-     * @return
-     */
-    public String getKey(String serverName, String methodName){
-        return serverName + "-" + methodName;
-    }
-
-    /**
-     * 判断本地是否已经有这个缓存了
-     * @param restApiCacheModelList
-     * @param restApiCacheModel
-     * @return
-     */
-    private boolean contains(List<RestApiCacheModel> restApiCacheModelList, RestApiCacheModel restApiCacheModel){
+    public static List<RestApiCacheModel> getRestApiModelForCache(String serverName, String methodName) throws Exception {
+        List<RestApiCacheModel> restApiCacheModelList = serverApiCache.getRestApiCacheModelList(serverName,methodName);
         if(restApiCacheModelList == null || restApiCacheModelList.size() < 1){
-            return true;
-        }
-        for(RestApiCacheModel item : restApiCacheModelList){
-            if(item.getUrl().equals(restApiCacheModel.getUrl()) && item.getMethodName().equals(restApiCacheModel.getMethodName())){
-                return false;
+            /* 如果缓存中没有获取到接口，就去zk里面获取 */
+            restApiCacheModelList = loadServerCache.getRestApiCacheModelByServerName(serverName, methodName);
+            if(restApiCacheModelList == null || restApiCacheModelList.size() < 1){
+                throw new Exception("没有找到服务接口, serverName:" + serverName + ", methodName:" + methodName);
+            }
+
+            for(RestApiCacheModel item : restApiCacheModelList){
+                serverApiCache.addCache(serverName, methodName, item);
             }
         }
-        return true;
+
+        return restApiCacheModelList;
     }
 }
