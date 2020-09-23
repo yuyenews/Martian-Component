@@ -72,7 +72,6 @@ public class ParamConversionUtilTest {
 
             System.out.println("参数转对象完成，耗时:" + (end - start));
 
-
             Assert.assertEquals(testParamModelA.getName(), requestParamModelMap.get("name").getValue());
             Assert.assertEquals(testParamModelA.getAge(), requestParamModelMap.get("age").getValue());
 

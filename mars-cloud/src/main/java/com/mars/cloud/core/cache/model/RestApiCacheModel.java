@@ -13,11 +13,6 @@ public class RestApiCacheModel {
     private String url;
 
     /**
-     * 内容类型
-     */
-    private String contentType;
-
-    /**
      * 请求方式
      */
     private ReqMethod reqMethod;
@@ -33,14 +28,6 @@ public class RestApiCacheModel {
 
     public void setUrl(String url) {
         this.url = url;
-    }
-
-    public String getContentType() {
-        return contentType;
-    }
-
-    public void setContentType(String contentType) {
-        this.contentType = contentType;
     }
 
     public ReqMethod getReqMethod() {

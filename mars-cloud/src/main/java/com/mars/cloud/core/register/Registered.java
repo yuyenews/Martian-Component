@@ -88,15 +88,10 @@ public class Registered {
             }
             RestApiModel restApiModel = new RestApiModel();
 
-            MarsContentType marsContentType = marsMappingModel.getExeMethod().getAnnotation(MarsContentType.class);
-            if(marsContentType == null){
-                restApiModel.setContentType(ContentType.FORM.getCode());
-            } else {
-                restApiModel.setContentType(marsContentType.ContentType().getCode());
-            }
             restApiModel.setUrl(MarsCloudUtil.getLocalHost() + "/" + methodName);
             restApiModel.setMethodName(methodName);
             restApiModel.setReqMethod(marsMappingModel.getReqMethod());
+
             restApiModelList.add(restApiModel);
         }
 

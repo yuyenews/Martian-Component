@@ -32,15 +32,15 @@ public class HttpUtil {
      * @param params
      * @return
      */
-    public static InputStream request(RestApiCacheModel restApiCacheModel, Object[] params) throws Exception{
+    public static InputStream request(RestApiCacheModel restApiCacheModel, Object[] params, ContentType contentType) throws Exception{
         if(restApiCacheModel.getReqMethod().equals(ReqMethod.GET)){
             return formGet(restApiCacheModel, params);
         } else {
-            if(restApiCacheModel.getContentType().equals(ContentType.FORM.getCode())){
+            if(contentType.equals(ContentType.FORM.getCode())){
                 return formPost(restApiCacheModel,params);
-            } else if(restApiCacheModel.getContentType().equals(ContentType.FORM_DATA.getCode())){
+            } else if(contentType.equals(ContentType.FORM_DATA.getCode())){
                 return formData(restApiCacheModel,params);
-            } else if(restApiCacheModel.getContentType().equals(ContentType.JSON.getCode())){
+            } else if(contentType.equals(ContentType.JSON.getCode())){
                 return json(restApiCacheModel,params);
             } else {
                 throw new Exception("请求的接口，ContentType未知，接口名:" + restApiCacheModel.getUrl());

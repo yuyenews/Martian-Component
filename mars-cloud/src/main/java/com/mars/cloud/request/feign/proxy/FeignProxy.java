@@ -1,6 +1,8 @@
 package com.mars.cloud.request.feign.proxy;
 
+import com.mars.cloud.core.annotation.MarsContentType;
 import com.mars.cloud.core.annotation.MarsFeign;
+import com.mars.cloud.core.annotation.enums.ContentType;
 import com.mars.cloud.request.rest.request.MarsRestTemplate;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
@@ -43,10 +45,16 @@ public class FeignProxy implements MethodInterceptor {
     public Object intercept(Object o, Method method, Object[] args, MethodProxy methodProxy) throws Throwable {
 
         MarsFeign marsFeign = cls.getAnnotation(MarsFeign.class);
+        MarsContentType marsContentType = method.getAnnotation(MarsContentType.class);
 
         check(marsFeign,method);
 
-        return MarsRestTemplate.request(marsFeign.serverName(),method.getName(),args, method.getReturnType());
+        ContentType contentType = ContentType.FORM;
+        if(marsContentType != null){
+            contentType = marsContentType.ContentType();
+        }
+
+        return MarsRestTemplate.request(marsFeign.serverName(),method.getName(),args, method.getReturnType(), contentType);
     }
 
     /**

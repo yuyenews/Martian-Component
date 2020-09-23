@@ -1,5 +1,6 @@
 package com.mars.cloud.request.rest.request;
 
+import com.mars.cloud.core.annotation.enums.ContentType;
 import com.mars.cloud.core.cache.model.RestApiCacheModel;
 import com.mars.cloud.fuse.FuseManager;
 import com.mars.cloud.core.util.HttpUtil;
@@ -21,8 +22,8 @@ public class MarsRestTemplate {
      * @return 结果
      * @throws Exception 异常
      */
-    public static <T> T request(String serverName, String methodName,Class<T> resultType) throws Exception {
-        return request(serverName, methodName, null,resultType);
+    public static <T> T request(String serverName, String methodName, Class<T> resultType, ContentType contentType) throws Exception {
+        return request(serverName, methodName, null, resultType, contentType);
     }
 
     /**
@@ -34,20 +35,20 @@ public class MarsRestTemplate {
      * @return 结果
      * @throws Exception 异常
      */
-    public static <T> T request(String serverName, String methodName, Object[] params, Class<T> resultType) throws Exception {
+    public static <T> T request(String serverName, String methodName, Object[] params, Class<T> resultType, ContentType contentType) throws Exception {
         RestApiCacheModel restApiCacheModel = null;
         try {
 
             restApiCacheModel = BalancedManager.getRestApiCacheModel(serverName, methodName);
 
-            if(params == null){
+            if (params == null) {
                 params = new Object[0];
             }
 
             /* 判断是否已经被熔断，如果没被熔断，就请求此接口 */
-            boolean isFuse =  FuseManager.isFuse(restApiCacheModel);
-            if(isFuse){
-                InputStream inputStream = HttpUtil.request(restApiCacheModel, params);
+            boolean isFuse = FuseManager.isFuse(restApiCacheModel);
+            if (isFuse) {
+                InputStream inputStream = HttpUtil.request(restApiCacheModel, params, contentType);
                 /* 由于要连续请求失败到一定次数，才会熔断，所以请求成功就清除错误次数 */
                 FuseManager.clearFailNum(restApiCacheModel);
 
