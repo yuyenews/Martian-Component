@@ -8,6 +8,19 @@
     <artifactId>mars-gateway</artifactId>
     <version>1.0.0</version>
 
+    <dependencies>
+        <dependency>
+            <groupId>com.github.yuyenews</groupId>
+            <artifactId>mars-common</artifactId>
+            <version>3.0.33</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.yuyenews</groupId>
+            <artifactId>mars-cloud-starter</artifactId>
+            <version>3.0.20</version>
+        </dependency>
+    </dependencies>
+
     <parent>
         <groupId>org.sonatype.oss</groupId>
         <artifactId>oss-parent</artifactId>
