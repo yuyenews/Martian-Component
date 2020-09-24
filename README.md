@@ -15,8 +15,8 @@
 
 <br/>
 
-## mars-cloud
-这是一个分布式组件，可以用来开发基于Mars-java的分布式应用
+## mars-fuse
+熔断器，用来跟martian-cloud配合使用的
 
 ## mars-gateway
 这是一个网关，跟mars-cloud配合使用，实现请求转发
