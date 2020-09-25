@@ -1,18 +1,21 @@
 package com.mars.gateway.config;
 
-import com.mars.cloud.config.MarsCloudConfig;
 import com.mars.cloud.config.model.CloudConfig;
+import com.mars.cloud.config.model.FuseConfig;
+import com.mars.common.base.config.model.CrossDomainConfig;
+import com.mars.common.base.config.model.ThreadPoolConfig;
 
 /**
  * 网关配置
  */
-public abstract class MarsGateWayConfig extends MarsCloudConfig {
+public abstract class MarsGateWayConfig {
 
-    @Override
-    public CloudConfig getCloudConfig() {
-        CloudConfig cloudConfig = getGateWayConfig();
-        cloudConfig.setGateWay(true);
-        return cloudConfig;
+    /**
+     * 端口号
+     * @return
+     */
+    public int port(){
+        return 8080;
     }
 
     /**
@@ -20,4 +23,28 @@ public abstract class MarsGateWayConfig extends MarsCloudConfig {
      * @return
      */
     public abstract CloudConfig getGateWayConfig();
+
+    /**
+     * 线程池配置
+     * @return 线程池配置
+     */
+    public ThreadPoolConfig getThreadPoolConfig(){
+        return new ThreadPoolConfig();
+    }
+
+    /**
+     * 跨域配置
+     * @return 跨域配置
+     */
+    public CrossDomainConfig crossDomainConfig(){
+        return new CrossDomainConfig();
+    }
+
+    /**
+     * 熔断器配置
+     * @return
+     */
+    public FuseConfig getFuseConfig() {
+        return null;
+    }
 }

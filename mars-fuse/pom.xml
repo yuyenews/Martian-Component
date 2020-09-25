@@ -11,14 +11,14 @@
     <dependencies>
         <dependency>
             <groupId>com.github.yuyenews</groupId>
-            <artifactId>martian-cloud-common</artifactId>
-            <version>3.0.20</version>
+            <artifactId>mars-cloud-common</artifactId>
+            <version>3.0.22</version>
             <optional>true</optional>
         </dependency>
         <dependency>
             <groupId>com.github.yuyenews</groupId>
             <artifactId>mars-common</artifactId>
-            <version>3.0.32</version>
+            <version>3.0.35</version>
             <optional>true</optional>
         </dependency>
     </dependencies>

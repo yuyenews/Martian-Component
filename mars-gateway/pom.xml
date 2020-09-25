@@ -11,13 +11,20 @@
     <dependencies>
         <dependency>
             <groupId>com.github.yuyenews</groupId>
-            <artifactId>mars-common</artifactId>
-            <version>3.0.33</version>
+            <artifactId>mars-server</artifactId>
+            <version>3.0.35</version>
         </dependency>
         <dependency>
             <groupId>com.github.yuyenews</groupId>
-            <artifactId>mars-cloud-starter</artifactId>
-            <version>3.0.20</version>
+            <artifactId>mars-cloud-request</artifactId>
+            <version>3.0.22</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+            <version>1.7.12</version>
+            <optional>true</optional>
         </dependency>
     </dependencies>
 
