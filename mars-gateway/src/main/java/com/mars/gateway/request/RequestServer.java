@@ -40,6 +40,4 @@ public class RequestServer {
     public static InputStream doDownLoadRequest(RequestInfoModel requestInfoModel, HttpExchange httpExchange){
         return null;
     }
-
-
 }
