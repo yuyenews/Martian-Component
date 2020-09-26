@@ -5,20 +5,25 @@
     <modelVersion>4.0.0</modelVersion>
 
     <groupId>com.github.yuyenews</groupId>
-    <artifactId>mars-fuse</artifactId>
+    <artifactId>mars-gateway-starter</artifactId>
     <version>1.0.0</version>
 
     <dependencies>
         <dependency>
             <groupId>com.github.yuyenews</groupId>
-            <artifactId>mars-cloud-common</artifactId>
-            <version>3.0.22</version>
-            <optional>true</optional>
+            <artifactId>mars-server</artifactId>
+            <version>3.0.36</version>
         </dependency>
         <dependency>
             <groupId>com.github.yuyenews</groupId>
-            <artifactId>mars-common</artifactId>
-            <version>3.0.35</version>
+            <artifactId>mars-cloud-request</artifactId>
+            <version>3.0.25</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.slf4j</groupId>
+            <artifactId>slf4j-jdk14</artifactId>
+            <version>1.7.12</version>
             <optional>true</optional>
         </dependency>
     </dependencies>
