@@ -1,7 +1,10 @@
 package com.mars.gateway.api;
 
 import com.alibaba.fastjson.JSON;
+import com.mars.gateway.api.inters.Filter;
 import com.mars.gateway.api.model.RequestInfoModel;
+import com.mars.gateway.api.util.DispatcherUtil;
+import com.mars.gateway.core.constant.GateWayConstant;
 import com.mars.gateway.core.util.RequestAndResultUtil;
 import com.mars.gateway.request.RequestServer;
 import com.sun.net.httpserver.HttpExchange;
@@ -24,11 +27,24 @@ public class GateWayDispatcher implements HttpHandler {
     public void handle(HttpExchange httpExchange) throws IOException {
         try {
             String requestUri = httpExchange.getRequestURI().toString();
+            String uri = DispatcherUtil.getRequestPath(requestUri).toUpperCase();
+            if(uri.equals("/")){
+                /* 如果请求的是根目录，则返回欢迎语 */
+                RequestAndResultUtil.send(httpExchange, GateWayConstant.WELCOME);
+                return;
+            }
+
+            boolean isFail = Filter.doFilter(requestUri, httpExchange);
+            if(isFail){
+                /* 如果请求的路径不合法，则直接响应一个ok */
+                RequestAndResultUtil.send(httpExchange, GateWayConstant.OK);
+                return;
+            }
 
             RequestInfoModel requestInfoModel = RequestAndResultUtil.getServerNameAndMethodName(requestUri);
 
             if(requestUri.startsWith(RequestAndResultUtil.ROUTER)){
-                Object object = RequestServer.doRequest(requestInfoModel, httpExchange);
+                Object object = RequestServer.doRouterRequest(requestInfoModel, httpExchange);
                 RequestAndResultUtil.send(httpExchange, JSON.toJSONString(object));
             } else if(requestUri.startsWith(RequestAndResultUtil.DOWNLOAD)) {
                 InputStream inputStream = RequestServer.doDownLoadRequest(requestInfoModel, httpExchange);

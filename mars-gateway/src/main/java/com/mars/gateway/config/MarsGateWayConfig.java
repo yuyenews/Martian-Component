@@ -45,6 +45,6 @@ public abstract class MarsGateWayConfig {
      * @return
      */
     public FuseConfig getFuseConfig() {
-        return null;
+        return new FuseConfig();
     }
 }

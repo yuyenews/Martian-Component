@@ -5,6 +5,7 @@ import com.mars.common.constant.MarsConstant;
 import com.mars.common.util.StringUtil;
 import com.mars.gateway.api.GateWayDispatcher;
 import com.mars.gateway.api.model.RequestInfoModel;
+import com.mars.gateway.api.util.DispatcherUtil;
 import com.mars.gateway.config.MarsGateWayConfig;
 import com.sun.net.httpserver.HttpExchange;
 import org.slf4j.Logger;
@@ -31,7 +32,10 @@ public class RequestAndResultUtil {
      * @throws Exception
      */
     public static RequestInfoModel getServerNameAndMethodName(String url) throws Exception {
-        url = url.replace(ROUTER,"").replace(DOWNLOAD,"");
+        url = DispatcherUtil.getUriName(url);
+
+        url = url.replace(ROUTER,"")
+                .replace(DOWNLOAD,"");
 
         if (url.startsWith("/")) {
             url = url.substring(1);

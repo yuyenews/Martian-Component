@@ -20,14 +20,8 @@ public class RequestServer {
      * @return
      * @throws Exception
      */
-    public static Object doRequest(RequestInfoModel requestInfoModel, HttpExchange httpExchange) throws Exception {
-        Object params = ParamConversionToModel.paramConversionToMap(httpExchange);
-
-        return MarsRestTemplate.request(requestInfoModel.getServerName(),
-                requestInfoModel.getMethodName(),
-                new Object[]{params},
-                Object.class,
-                RequestUtil.getContentType(httpExchange));
+    public static Object doRouterRequest(RequestInfoModel requestInfoModel, HttpExchange httpExchange) throws Exception {
+        return doRequest(requestInfoModel, httpExchange, Object.class);
     }
 
     /**
@@ -37,7 +31,25 @@ public class RequestServer {
      * @return
      * @throws Exception
      */
-    public static InputStream doDownLoadRequest(RequestInfoModel requestInfoModel, HttpExchange httpExchange){
-        return null;
+    public static InputStream doDownLoadRequest(RequestInfoModel requestInfoModel, HttpExchange httpExchange) throws Exception {
+        return doRequest(requestInfoModel, httpExchange, InputStream.class);
+    }
+
+    /**
+     * 发起请求
+     * @param requestInfoModel
+     * @param httpExchange
+     * @param resultType
+     * @return
+     * @throws Exception
+     */
+    private static <T> T doRequest(RequestInfoModel requestInfoModel, HttpExchange httpExchange, Class<T> resultType) throws Exception {
+        Object params = ParamConversionToModel.paramConversionToMap(httpExchange);
+
+        return MarsRestTemplate.request(requestInfoModel.getServerName(),
+                requestInfoModel.getMethodName(),
+                new Object[]{params},
+                resultType,
+                RequestUtil.getContentType(httpExchange));
     }
 }

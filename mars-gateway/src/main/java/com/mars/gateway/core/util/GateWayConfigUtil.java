@@ -8,6 +8,8 @@ import com.mars.common.base.config.model.CrossDomainConfig;
 import com.mars.common.base.config.model.ThreadPoolConfig;
 import com.mars.common.util.MarsConfiguration;
 import com.mars.gateway.config.MarsGateWayConfig;
+import com.mars.gateway.config.impl.MarsCloudConfigImpl;
+import com.mars.gateway.config.impl.MarsGateWayConfigImpl;
 
 /**
  * 配置工具类
@@ -19,34 +21,8 @@ public class GateWayConfigUtil {
      * @param marsGateWayConfig
      */
     public static void setConfig(MarsGateWayConfig marsGateWayConfig){
-        MarsCloudConfig marsCloudConfig = new MarsCloudConfig() {
-            @Override
-            public CloudConfig getCloudConfig() {
-                CloudConfig cloudConfig = marsGateWayConfig.getGateWayConfig();
-                cloudConfig.setGateWay(true);
-                return cloudConfig;
-            }
-
-            @Override
-            public FuseConfig getFuseConfig() {
-                return marsGateWayConfig.getFuseConfig();
-            }
-
-            @Override
-            public int port() {
-                return marsGateWayConfig.port();
-            }
-
-            @Override
-            public ThreadPoolConfig getThreadPoolConfig() {
-                return marsGateWayConfig.getThreadPoolConfig();
-            }
-
-            @Override
-            public CrossDomainConfig crossDomainConfig() {
-                return marsGateWayConfig.crossDomainConfig();
-            }
-        };
+        MarsCloudConfigImpl marsCloudConfig = new MarsCloudConfigImpl();
+        marsCloudConfig.setMarsGateWayConfig(marsGateWayConfig);
 
         MarsConfiguration.loadConfig(marsCloudConfig);
     }
@@ -70,32 +46,8 @@ public class GateWayConfigUtil {
      * @return
      */
     private static MarsGateWayConfig getMarsGateWayConfigObj(MarsCloudConfig marsCloudConfig){
-        MarsGateWayConfig marsGateWayConfig = new MarsGateWayConfig() {
-            @Override
-            public CloudConfig getGateWayConfig() {
-                return marsCloudConfig.getCloudConfig();
-            }
-
-            @Override
-            public FuseConfig getFuseConfig() {
-                return marsCloudConfig.getFuseConfig();
-            }
-
-            @Override
-            public int port() {
-                return marsCloudConfig.port();
-            }
-
-            @Override
-            public ThreadPoolConfig getThreadPoolConfig() {
-                return marsCloudConfig.getThreadPoolConfig();
-            }
-
-            @Override
-            public CrossDomainConfig crossDomainConfig() {
-                return marsCloudConfig.crossDomainConfig();
-            }
-        };
+        MarsGateWayConfigImpl marsGateWayConfig = new MarsGateWayConfigImpl();
+        marsGateWayConfig.setMarsCloudConfig(marsCloudConfig);
         return marsGateWayConfig;
     }
 }
