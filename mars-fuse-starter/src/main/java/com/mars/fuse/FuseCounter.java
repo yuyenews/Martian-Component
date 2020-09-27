@@ -35,22 +35,6 @@ public class FuseCounter implements FuseManager {
     }
 
     /**
-     * 获取计数器
-     * @return
-     */
-    private static Map<String, FuseModel> getFuseMap(){
-        Map<String, FuseModel> fuseMap = null;
-        Object fuseObj = marsSpace.getAttr(COUNTER_KEY);
-        if(fuseObj == null){
-            fuseMap = new ConcurrentHashMap<>();
-            marsSpace.setAttr(COUNTER_KEY, fuseMap);
-        } else {
-            fuseMap = (Map<String, FuseModel>)fuseObj;
-        }
-        return fuseMap;
-    }
-
-    /**
      * 判断是否是熔断状态
      * @param serverName
      * @param methodName
@@ -58,6 +42,7 @@ public class FuseCounter implements FuseManager {
      * @return
      * @throws Exception
      */
+    @Override
     public boolean isFuse(String serverName, String methodName, String url) throws Exception{
         init();
         if(fuseConfig == null){
@@ -88,6 +73,7 @@ public class FuseCounter implements FuseManager {
      * @param url
      * @throws Exception
      */
+    @Override
     public synchronized void addFailNum(String serverName, String methodName, String url) throws Exception{
         init();
         if(fuseConfig == null){
@@ -111,6 +97,7 @@ public class FuseCounter implements FuseManager {
      * @param url
      * @throws Exception
      */
+    @Override
     public synchronized void addFuseNum(String serverName, String methodName, String url) throws Exception{
         init();
         if(fuseConfig == null){
@@ -134,6 +121,7 @@ public class FuseCounter implements FuseManager {
      * @param url
      * @throws Exception
      */
+    @Override
     public synchronized void clearFailNum(String serverName, String methodName, String url) throws Exception{
         init();
         if(fuseConfig == null){
@@ -157,6 +145,30 @@ public class FuseCounter implements FuseManager {
         marsSpace.setAttr(COUNTER_KEY, fuseMap);
     }
 
+    /**
+     * 获取计数器
+     * @return
+     */
+    private static Map<String, FuseModel> getFuseMap(){
+        Map<String, FuseModel> fuseMap = null;
+        Object fuseObj = marsSpace.getAttr(COUNTER_KEY);
+        if(fuseObj == null){
+            fuseMap = new ConcurrentHashMap<>();
+            marsSpace.setAttr(COUNTER_KEY, fuseMap);
+        } else {
+            fuseMap = (Map<String, FuseModel>)fuseObj;
+        }
+        return fuseMap;
+    }
+
+    /**
+     * 获取key
+     * @param serverName
+     * @param methodName
+     * @param url
+     * @return
+     * @throws Exception
+     */
     private String getKey(String serverName, String methodName, String url) throws Exception {
         StringBuffer str = new StringBuffer();
         str.append(serverName);
