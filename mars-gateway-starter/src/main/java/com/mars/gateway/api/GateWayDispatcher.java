@@ -1,6 +1,7 @@
 package com.mars.gateway.api;
 
 import com.alibaba.fastjson.JSON;
+import com.mars.cloud.request.util.model.HttpResultModel;
 import com.mars.gateway.api.inters.Filter;
 import com.mars.gateway.api.model.RequestInfoModel;
 import com.mars.gateway.api.util.DispatcherUtil;
@@ -13,7 +14,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.UUID;
 
 /**
@@ -47,8 +47,9 @@ public class GateWayDispatcher implements HttpHandler {
                 Object object = RequestServer.doRouterRequest(requestInfoModel, httpExchange);
                 RequestAndResultUtil.send(httpExchange, JSON.toJSONString(object));
             } else if(requestUri.startsWith(RequestAndResultUtil.DOWNLOAD)) {
-                InputStream inputStream = RequestServer.doDownLoadRequest(requestInfoModel, httpExchange);
-                RequestAndResultUtil.downLoad(httpExchange, UUID.randomUUID().toString(), inputStream);
+                HttpResultModel httpResultModel = RequestServer.doDownLoadRequest(requestInfoModel, httpExchange);
+                String fileName = getFileName(httpResultModel);
+                RequestAndResultUtil.downLoad(httpExchange, fileName, httpResultModel.getInputStream());
             } else {
                 throw new IOException("请求路径有误");
             }
@@ -56,5 +57,25 @@ public class GateWayDispatcher implements HttpHandler {
             log.error("处理请求失败!", e);
             RequestAndResultUtil.send(httpExchange,"处理请求发生错误"+e.getMessage());
         }
+    }
+
+    /**
+     * 获取文件名称
+     * @param httpResultModel
+     * @return
+     */
+    private String getFileName(HttpResultModel httpResultModel){
+        String fileName = httpResultModel.getFileName();
+        if(fileName == null){
+            fileName = UUID.randomUUID().toString();
+        } else {
+            String[] fileNames = fileName.split("=");
+            if(fileNames == null || fileNames.length < 2){
+                fileName = UUID.randomUUID().toString();
+            } else {
+                fileName = fileNames[1];
+            }
+        }
+        return fileName;
     }
 }

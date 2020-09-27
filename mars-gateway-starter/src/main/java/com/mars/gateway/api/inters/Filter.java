@@ -5,8 +5,17 @@ import com.mars.gateway.api.util.DispatcherUtil;
 import com.mars.iserver.execute.access.PathAccess;
 import com.sun.net.httpserver.HttpExchange;
 
+/**
+ * 过滤器
+ */
 public class Filter {
 
+    /**
+     * 过滤掉非法请求
+     * @param requestUri
+     * @param httpExchange
+     * @return
+     */
     public static boolean doFilter(String requestUri, HttpExchange httpExchange){
         String method =  httpExchange.getRequestMethod().toUpperCase();
         /* 如果请求方式是options，那就说明这是一个试探性的请求，直接响应即可 */

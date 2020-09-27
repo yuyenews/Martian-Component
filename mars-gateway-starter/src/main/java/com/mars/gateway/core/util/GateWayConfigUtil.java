@@ -1,11 +1,7 @@
 package com.mars.gateway.core.util;
 
 import com.mars.cloud.config.MarsCloudConfig;
-import com.mars.cloud.config.model.CloudConfig;
-import com.mars.cloud.config.model.FuseConfig;
 import com.mars.common.base.config.MarsConfig;
-import com.mars.common.base.config.model.CrossDomainConfig;
-import com.mars.common.base.config.model.ThreadPoolConfig;
 import com.mars.common.util.MarsConfiguration;
 import com.mars.gateway.config.MarsGateWayConfig;
 import com.mars.gateway.config.impl.MarsCloudConfigImpl;

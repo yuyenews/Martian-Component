@@ -1,12 +1,11 @@
 package com.mars.gateway.request;
 
 import com.mars.cloud.request.rest.request.MarsRestTemplate;
+import com.mars.cloud.request.util.model.HttpResultModel;
 import com.mars.gateway.api.model.RequestInfoModel;
 import com.mars.gateway.request.param.ParamConversionToModel;
 import com.mars.gateway.request.util.RequestUtil;
 import com.sun.net.httpserver.HttpExchange;
-
-import java.io.InputStream;
 
 /**
  * 转发给对应的微服务
@@ -31,8 +30,8 @@ public class RequestServer {
      * @return
      * @throws Exception
      */
-    public static InputStream doDownLoadRequest(RequestInfoModel requestInfoModel, HttpExchange httpExchange) throws Exception {
-        return doRequest(requestInfoModel, httpExchange, InputStream.class);
+    public static HttpResultModel doDownLoadRequest(RequestInfoModel requestInfoModel, HttpExchange httpExchange) throws Exception {
+        return doRequest(requestInfoModel, httpExchange, HttpResultModel.class);
     }
 
     /**
