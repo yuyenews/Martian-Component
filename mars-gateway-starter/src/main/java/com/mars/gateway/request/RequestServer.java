@@ -13,42 +13,19 @@ import com.mars.server.server.request.HttpMarsRequest;
 public class RequestServer {
 
     /**
-     * 向微服务发起请求
-     * @param requestInfoModel
-     * @param request
-     * @return
-     * @throws Exception
-     */
-    public static Object doRouterRequest(RequestInfoModel requestInfoModel, HttpMarsRequest request) throws Exception {
-        return doRequest(requestInfoModel, request, Object.class);
-    }
-
-    /**
-     * 向微服务发起请求
-     * @param requestInfoModel
-     * @param request
-     * @return
-     * @throws Exception
-     */
-    public static HttpResultModel doDownLoadRequest(RequestInfoModel requestInfoModel, HttpMarsRequest request) throws Exception {
-        return doRequest(requestInfoModel, request, HttpResultModel.class);
-    }
-
-    /**
      * 发起请求
      * @param requestInfoModel
      * @param request
-     * @param resultType
      * @return
      * @throws Exception
      */
-    private static <T> T doRequest(RequestInfoModel requestInfoModel, HttpMarsRequest request, Class<T> resultType) throws Exception {
+    public static HttpResultModel doRequest(RequestInfoModel requestInfoModel, HttpMarsRequest request) throws Exception {
         Object params = ParamConversionToModel.paramConversionToMap(request);
 
         return MarsRestTemplate.request(requestInfoModel.getServerName(),
                 requestInfoModel.getMethodName(),
                 new Object[]{params},
-                resultType,
+                HttpResultModel.class,
                 RequestUtil.getContentType(request));
     }
 }

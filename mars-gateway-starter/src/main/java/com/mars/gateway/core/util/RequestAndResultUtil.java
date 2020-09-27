@@ -12,9 +12,6 @@ import com.sun.net.httpserver.HttpExchange;
  */
 public class RequestAndResultUtil {
 
-    public static final String ROUTER = "/router";
-    public static final String DOWNLOAD = "/download";
-
     /**
      * 从请求中解析出要转发的服务名和方法名
      * @param url
@@ -23,9 +20,6 @@ public class RequestAndResultUtil {
      */
     public static RequestInfoModel getServerNameAndMethodName(String url) throws Exception {
         url = DispatcherUtil.getUriName(url);
-
-        url = url.replace(ROUTER,"")
-                .replace(DOWNLOAD,"");
 
         if (url.startsWith("/")) {
             url = url.substring(1);

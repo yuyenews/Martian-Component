@@ -1,7 +1,9 @@
 package com.mars.gateway.api;
 
 import com.alibaba.fastjson.JSON;
+import com.mars.cloud.constant.MarsCloudConstant;
 import com.mars.cloud.request.util.model.HttpResultModel;
+import com.mars.common.util.SerializableUtil;
 import com.mars.gateway.api.filter.GateFactory;
 import com.mars.gateway.api.filter.GateFilter;
 import com.mars.gateway.api.model.RequestInfoModel;
@@ -41,15 +43,13 @@ public class GateWayDispatcher implements HttpHandler {
             String requestUri = request.getUrl();
             RequestInfoModel requestInfoModel = RequestAndResultUtil.getServerNameAndMethodName(requestUri);
 
-            if(requestUri.startsWith(RequestAndResultUtil.ROUTER)){
-                Object object = RequestServer.doRouterRequest(requestInfoModel, request);
+            HttpResultModel httpResultModel = RequestServer.doRequest(requestInfoModel, request);
+            String fileName = getFileName(httpResultModel);
+            if(fileName.equals(MarsCloudConstant.RESULT_FILE_NAME)){
+                Object object = SerializableUtil.deSerialization(httpResultModel.getInputStream(), Object.class);
                 response.send(JSON.toJSONString(object));
-            } else if(requestUri.startsWith(RequestAndResultUtil.DOWNLOAD)) {
-                HttpResultModel httpResultModel = RequestServer.doDownLoadRequest(requestInfoModel, request);
-                String fileName = getFileName(httpResultModel);
-                response.downLoad(fileName, httpResultModel.getInputStream());
             } else {
-                throw new IOException("请求路径有误");
+                response.downLoad(fileName, httpResultModel.getInputStream());
             }
         } catch (Exception e) {
             log.error("处理请求失败!", e);
