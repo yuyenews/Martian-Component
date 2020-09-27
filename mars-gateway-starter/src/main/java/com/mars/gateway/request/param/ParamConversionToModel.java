@@ -6,7 +6,6 @@ import com.mars.gateway.request.util.RequestUtil;
 import com.mars.iserver.par.HttpMarsRequestFactory;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.model.MarsFileUpLoad;
-import com.sun.net.httpserver.HttpExchange;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -26,7 +25,7 @@ public class ParamConversionToModel {
     public static Object paramConversionToMap(HttpMarsRequest request) throws Exception {
         request = HttpMarsRequestFactory.getHttpMarsRequest(request);
 
-        ContentType contentType = RequestUtil.getContentType(request.getHttpExchange());
+        ContentType contentType = RequestUtil.getContentType(request);
         switch (contentType){
             case FORM:
                 return request.getParameters();

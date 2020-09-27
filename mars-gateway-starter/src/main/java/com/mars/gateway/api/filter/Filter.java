@@ -5,7 +5,6 @@ import com.mars.gateway.api.util.DispatcherUtil;
 import com.mars.gateway.core.constant.GateWayConstant;
 import com.mars.iserver.execute.access.PathAccess;
 import com.mars.server.server.request.HttpMarsRequest;
-import com.sun.net.httpserver.HttpExchange;
 
 /**
  * 过滤器

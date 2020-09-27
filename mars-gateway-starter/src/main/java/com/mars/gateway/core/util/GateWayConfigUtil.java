@@ -1,13 +1,9 @@
 package com.mars.gateway.core.util;
 
-import com.mars.cloud.config.MarsCloudConfig;
-import com.mars.common.base.config.MarsConfig;
-import com.mars.common.constant.MarsConstant;
 import com.mars.common.constant.MarsSpace;
 import com.mars.common.util.MarsConfiguration;
 import com.mars.gateway.config.MarsGateWayConfig;
 import com.mars.gateway.config.impl.MarsCloudConfigImpl;
-import com.mars.gateway.config.impl.MarsGateWayConfigImpl;
 
 /**
  * 配置工具类

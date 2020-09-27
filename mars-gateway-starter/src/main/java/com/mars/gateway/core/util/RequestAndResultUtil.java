@@ -1,13 +1,10 @@
 package com.mars.gateway.core.util;
 
 import com.mars.common.util.StringUtil;
-import com.mars.gateway.api.GateWayDispatcher;
 import com.mars.gateway.api.model.RequestInfoModel;
 import com.mars.gateway.api.util.DispatcherUtil;
 import com.mars.server.server.request.HttpMarsResponse;
 import com.sun.net.httpserver.HttpExchange;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 
 /**

@@ -1,6 +1,5 @@
 package com.mars.gateway.starter;
 
-import com.mars.cloud.config.model.CloudConfig;
 import com.mars.gateway.config.MarsGateWayConfig;
 import com.mars.gateway.core.server.GateServer;
 import com.mars.gateway.core.timer.GateTimer;
