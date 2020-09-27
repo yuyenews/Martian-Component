@@ -1,4 +1,4 @@
-package com.mars.gateway.api.filter.business;
+package com.mars.gateway.api.filter;
 
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;

@@ -4,7 +4,7 @@ import com.mars.cloud.config.model.CloudConfig;
 import com.mars.cloud.config.model.FuseConfig;
 import com.mars.common.base.config.model.CrossDomainConfig;
 import com.mars.common.base.config.model.ThreadPoolConfig;
-import com.mars.gateway.api.filter.business.GateFilter;
+import com.mars.gateway.api.filter.GateFilter;
 
 import java.util.ArrayList;
 import java.util.List;

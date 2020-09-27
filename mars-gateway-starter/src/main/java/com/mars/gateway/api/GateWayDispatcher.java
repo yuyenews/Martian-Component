@@ -2,9 +2,8 @@ package com.mars.gateway.api;
 
 import com.alibaba.fastjson.JSON;
 import com.mars.cloud.request.util.model.HttpResultModel;
-import com.mars.gateway.api.filter.Filter;
-import com.mars.gateway.api.filter.business.GateFactory;
-import com.mars.gateway.api.filter.business.GateFilter;
+import com.mars.gateway.api.filter.GateFactory;
+import com.mars.gateway.api.filter.GateFilter;
 import com.mars.gateway.api.model.RequestInfoModel;
 import com.mars.gateway.core.util.RequestAndResultUtil;
 import com.mars.gateway.request.RequestServer;
@@ -31,13 +30,6 @@ public class GateWayDispatcher implements HttpHandler {
         try {
             HttpMarsRequest request = new HttpMarsRequest(httpExchange);
             HttpMarsResponse response = new HttpMarsResponse(httpExchange);
-
-            // 过滤非法请求
-            String filterResult = Filter.filter(request);
-            if(!filterResult.equals(GateFilter.SUCCESS)){
-                response.send(filterResult);
-                return;
-            }
 
             // 执行过滤器
             Object result = execFilter(request, response);
