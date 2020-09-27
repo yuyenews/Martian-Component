@@ -1,8 +1,6 @@
 package com.mars.gateway.core.server.thread;
 
-import com.mars.common.base.config.MarsConfig;
 import com.mars.common.base.config.model.ThreadPoolConfig;
-import com.mars.common.util.MarsConfiguration;
 import com.mars.gateway.config.MarsGateWayConfig;
 import com.mars.gateway.core.util.GateWayConfigUtil;
 
