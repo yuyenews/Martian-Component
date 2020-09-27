@@ -1,14 +1,10 @@
 package com.mars.gateway.api.util;
 
-import java.io.ByteArrayOutputStream;
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.io.InputStream;
 
 public class DispatcherUtil {
 
     /**
-     * 从uri中提取 请求连接的最末端，用来匹配控制层映射
+     * 从uri中提取 请求连接的最末端
      * @param requestUri
      * @return
      */

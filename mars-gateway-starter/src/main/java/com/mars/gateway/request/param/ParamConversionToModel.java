@@ -19,15 +19,14 @@ public class ParamConversionToModel {
 
     /**
      * 从请求中获取参数，并转化成restTemplate可以识别的对象
-     * @param httpExchange
+     * @param request
      * @return
      * @throws Exception
      */
-    public static Object paramConversionToMap(HttpExchange httpExchange) throws Exception {
-        HttpMarsRequest request = new HttpMarsRequest(httpExchange);
+    public static Object paramConversionToMap(HttpMarsRequest request) throws Exception {
         request = HttpMarsRequestFactory.getHttpMarsRequest(request);
 
-        ContentType contentType = RequestUtil.getContentType(httpExchange);
+        ContentType contentType = RequestUtil.getContentType(request.getHttpExchange());
         switch (contentType){
             case FORM:
                 return request.getParameters();

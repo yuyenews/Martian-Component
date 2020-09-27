@@ -4,6 +4,11 @@ import com.mars.cloud.config.model.CloudConfig;
 import com.mars.cloud.config.model.FuseConfig;
 import com.mars.common.base.config.model.CrossDomainConfig;
 import com.mars.common.base.config.model.ThreadPoolConfig;
+import com.mars.gateway.api.filter.business.DefaultGateFilter;
+import com.mars.gateway.api.filter.business.GateFilter;
+
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * 网关配置
@@ -46,5 +51,13 @@ public abstract class MarsGateWayConfig {
      */
     public FuseConfig getFuseConfig() {
         return new FuseConfig();
+    }
+
+    /**
+     * 获取一个过滤器
+     * @return
+     */
+    public List<GateFilter> getGateFilter(){
+        return new ArrayList<>();
     }
 }
