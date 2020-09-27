@@ -44,7 +44,7 @@ public class DefaultGateFilter implements GateFilter {
      * @return
      */
     private static boolean doFilter(String requestUri, HttpMarsRequest request){
-        String method =  request.getMethod().toUpperCase();
+        String method = request.getMethod().toUpperCase();
         /* 如果请求方式是options，那就说明这是一个试探性的请求，直接响应即可 */
         if(method.equals(MarsConstant.OPTIONS.toLowerCase())){
             return true;
