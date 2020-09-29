@@ -3,7 +3,7 @@ package com.mars.gateway.api;
 import com.alibaba.fastjson.JSON;
 import com.mars.cloud.constant.MarsCloudConstant;
 import com.mars.cloud.request.util.model.HttpResultModel;
-import com.mars.common.util.SerializableUtil;
+import com.mars.cloud.util.SerializableCloudUtil;
 import com.mars.gateway.api.filter.GateFactory;
 import com.mars.gateway.api.filter.GateFilter;
 import com.mars.gateway.api.model.RequestInfoModel;
@@ -46,7 +46,7 @@ public class GateWayDispatcher implements HttpHandler {
             HttpResultModel httpResultModel = RequestServer.doRequest(requestInfoModel, request);
             String fileName = getFileName(httpResultModel);
             if(fileName.equals(MarsCloudConstant.RESULT_FILE_NAME)){
-                Object object = SerializableUtil.deSerialization(httpResultModel.getInputStream(), Object.class);
+                Object object = SerializableCloudUtil.deSerialization(httpResultModel.getInputStream(), Object.class);
                 response.send(JSON.toJSONString(object));
             } else {
                 response.downLoad(fileName, httpResultModel.getInputStream());
