@@ -18,6 +18,7 @@ public class RequestServer {
 
     /**
      * 发起请求
+     *
      * @param requestInfoModel
      * @param request
      * @return
@@ -32,23 +33,24 @@ public class RequestServer {
                 requestInfoModel.getMethodName(),
                 new Object[]{params},
                 HttpResultModel.class,
-                RequestUtil.getContentType(request),header);
+                RequestUtil.getContentType(request), header);
     }
 
     /**
      * 获取请求头
+     *
      * @param request
      * @return
      */
-    private static MarsHeader getHeader(HttpMarsRequest request){
+    private static MarsHeader getHeader(HttpMarsRequest request) {
         Headers headers = request.getHttpExchange().getRequestHeaders();
-        if(headers == null || headers.size() < 1){
+        if (headers == null || headers.size() < 1) {
             return null;
         }
         MarsHeader marsHeader = new MarsHeader();
-        for(String name : headers.keySet()){
+        for (String name : headers.keySet()) {
             List<String> values = headers.get(name);
-            if(values == null || values.size() < 1){
+            if (values == null || values.size() < 1) {
                 continue;
             }
             marsHeader.put(name, values);

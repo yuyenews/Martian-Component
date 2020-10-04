@@ -74,7 +74,7 @@ public class FuseCounter implements FuseManager {
      * @throws Exception
      */
     @Override
-    public synchronized void addFailNum(String serverName, String methodName, String url) throws Exception{
+    public synchronized void requestFail(String serverName, String methodName, String url) throws Exception{
         init();
         if(fuseConfig == null){
             return;
@@ -98,7 +98,7 @@ public class FuseCounter implements FuseManager {
      * @throws Exception
      */
     @Override
-    public synchronized void addFuseNum(String serverName, String methodName, String url) throws Exception{
+    public synchronized void fuseAfter(String serverName, String methodName, String url) throws Exception{
         init();
         if(fuseConfig == null){
             return;
@@ -122,7 +122,7 @@ public class FuseCounter implements FuseManager {
      * @throws Exception
      */
     @Override
-    public synchronized void clearFailNum(String serverName, String methodName, String url) throws Exception{
+    public synchronized void requestSuccess(String serverName, String methodName, String url) throws Exception{
         init();
         if(fuseConfig == null){
             return;
