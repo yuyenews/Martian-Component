@@ -49,7 +49,7 @@ public class InitTomcatRequest implements InitRequest {
                 marsParams = urlencoded(request);
             } else if (ParamTypeConstant.isFormData(contentType)) {
                 /* formData提交，可以用于文件上传 */
-                Map<String, Object> result = formData(request, contentType);
+                Map<String, Object> result = formData(request);
                 files = (Map<String, MarsFileUpLoad>) result.get(ParsingFormData.FILES_KEY);
                 marsParams = (Map<String, List<String>>) result.get(ParsingFormData.PARAMS_KEY);
             } else if (ParamTypeConstant.isJSON(contentType)) {
@@ -68,7 +68,6 @@ public class InitTomcatRequest implements InitRequest {
     /**
      * 获取表单提交的数据
      * @param request
-     * @param isDecode
      * @return
      */
     private Map<String, List<String>> urlencoded(HttpServletRequest request){
@@ -128,11 +127,10 @@ public class InitTomcatRequest implements InitRequest {
     /**
      * 从formData中获取参数
      * @param request
-     * @param contentType
      * @return
      * @throws Exception
      */
-    private Map<String, Object> formData(HttpServletRequest request, String contentType) throws Exception {
+    private Map<String, Object> formData(HttpServletRequest request) throws Exception {
         UploadContext uploadContext = new HttpServletRequestContext(request);
         return ParsingFormData.parsing(uploadContext);
     }
