@@ -1,5 +1,6 @@
 package com.mars.start.tomcat.server.servlet;
 
+import com.mars.common.constant.MarsConstant;
 import com.mars.iserver.execute.RequestExecute;
 import com.mars.iserver.server.MarsServerHandler;
 import com.mars.iserver.util.ResponseUtil;
@@ -25,6 +26,9 @@ public class MarsTomcatServlet extends HttpServlet {
 
     @Override
     protected void service(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
+        req.setCharacterEncoding(MarsConstant.ENCODING);
+        resp.setCharacterEncoding(MarsConstant.ENCODING);
+
         /* 组装httpRequest对象 */
         HttpMarsRequest request = new HttpMarsTomcatRequest(req);;
 

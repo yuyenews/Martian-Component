@@ -56,8 +56,8 @@ public class HttpMarsTomcatResponse extends HttpMarsResponse {
         try {
             crossDomain();
 
-            /* 设置响应头，必须在sendResponseHeaders方法之前设置 */
-            response.setHeader("Content-Type:", "text/json;charset="+ MarsConstant.ENCODING);
+            /* 设置响应头 */
+            response.setContentType("text/json;charset=" + MarsConstant.ENCODING);
             out = response.getWriter();
             out.write(s);
         } catch (Exception e){
