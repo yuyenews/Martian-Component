@@ -6,13 +6,13 @@
 
     <groupId>com.github.yuyenews</groupId>
     <artifactId>mars-gateway-starter</artifactId>
-    <version>1.0.6</version>
+    <version>1.0.7</version>
 
     <dependencies>
         <dependency>
             <groupId>com.github.yuyenews</groupId>
             <artifactId>mars-server</artifactId>
-            <version>3.0.36</version>
+            <version>3.0.37</version>
         </dependency>
         <dependency>
             <groupId>com.github.yuyenews</groupId>

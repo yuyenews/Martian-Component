@@ -11,6 +11,8 @@ import com.mars.gateway.core.util.RequestAndResultUtil;
 import com.mars.gateway.request.RequestServer;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
+import com.mars.server.server.request.impl.HttpMarsDefaultRequest;
+import com.mars.server.server.request.impl.HttpMarsDefaultResponse;
 import com.sun.net.httpserver.HttpExchange;
 import com.sun.net.httpserver.HttpHandler;
 import org.slf4j.Logger;
@@ -30,8 +32,8 @@ public class GateWayDispatcher implements HttpHandler {
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
         try {
-            HttpMarsRequest request = new HttpMarsRequest(httpExchange);
-            HttpMarsResponse response = new HttpMarsResponse(httpExchange);
+            HttpMarsRequest request = new HttpMarsDefaultRequest(httpExchange);
+            HttpMarsResponse response = new HttpMarsDefaultResponse(httpExchange);
 
             // 执行过滤器
             Object result = execFilter(request, response);

@@ -8,6 +8,7 @@ import com.mars.gateway.request.param.ParamConversionToModel;
 import com.mars.gateway.request.util.RequestUtil;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.sun.net.httpserver.Headers;
+import com.sun.net.httpserver.HttpExchange;
 
 import java.util.List;
 
@@ -43,7 +44,7 @@ public class RequestServer {
      * @return
      */
     private static MarsHeader getHeader(HttpMarsRequest request) {
-        Headers headers = request.getHttpExchange().getRequestHeaders();
+        Headers headers = request.getNativeRequest(HttpExchange.class).getRequestHeaders();
         if (headers == null || headers.size() < 1) {
             return null;
         }
