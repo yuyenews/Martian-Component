@@ -3,7 +3,7 @@ package com.mars.gateway.request.param;
 import com.alibaba.fastjson.JSONObject;
 import com.mars.cloud.annotation.enums.ContentType;
 import com.mars.gateway.request.util.RequestUtil;
-import com.mars.iserver.par.HttpMarsRequestFactory;
+import com.mars.iserver.par.factory.InitRequestFactory;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.model.MarsFileUpLoad;
 
@@ -23,7 +23,7 @@ public class ParamConversionToModel {
      * @throws Exception
      */
     public static Object paramConversionToMap(HttpMarsRequest request) throws Exception {
-        request = HttpMarsRequestFactory.getHttpMarsRequest(request);
+        request = InitRequestFactory.getInitRequest().getHttpMarsRequest(request);
 
         ContentType contentType = RequestUtil.getContentType(request);
         switch (contentType){

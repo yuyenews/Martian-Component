@@ -31,9 +31,10 @@ public class GateWayDispatcher implements HttpHandler {
 
     @Override
     public void handle(HttpExchange httpExchange) throws IOException {
+        HttpMarsRequest request = new HttpMarsDefaultRequest(httpExchange);
+        HttpMarsResponse response = new HttpMarsDefaultResponse(httpExchange);
+
         try {
-            HttpMarsRequest request = new HttpMarsDefaultRequest(httpExchange);
-            HttpMarsResponse response = new HttpMarsDefaultResponse(httpExchange);
 
             // 执行过滤器
             Object result = execFilter(request, response);
@@ -55,7 +56,7 @@ public class GateWayDispatcher implements HttpHandler {
             }
         } catch (Exception e) {
             log.error("处理请求失败!", e);
-            RequestAndResultUtil.send(httpExchange,"处理请求发生错误"+e.getMessage());
+            RequestAndResultUtil.send(response,"处理请求发生错误"+e.getMessage());
         }
     }
 

@@ -1,10 +1,10 @@
 package com.mars.gateway.core.util;
 
+import com.mars.common.util.MesUtil;
 import com.mars.common.util.StringUtil;
 import com.mars.gateway.api.model.RequestInfoModel;
 import com.mars.gateway.api.util.DispatcherUtil;
 import com.mars.server.server.request.HttpMarsResponse;
-import com.sun.net.httpserver.HttpExchange;
 
 
 /**
@@ -44,8 +44,7 @@ public class RequestAndResultUtil {
      *
      * @param context 消息
      */
-    public static void send(HttpExchange httpExchange, String context) {
-        HttpMarsResponse response = new HttpMarsResponse(httpExchange);
-        response.send(context);
+    public static void send(HttpMarsResponse response, String context) {
+        response.send(MesUtil.getMes(500,context).toJSONString());
     }
 }
