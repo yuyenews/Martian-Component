@@ -19,6 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
+import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
 
@@ -36,8 +37,11 @@ public class GateWayDispatcher implements HttpHandler {
 
         try {
 
-            // 执行过滤器
-            Object result = execFilter(request, response);
+            /* 获取过滤器 */
+            List<GateFilter> gateFilterList = GateFactory.getGateFilter();
+
+            /* 执行过滤器 */
+            Object result = execFilter(gateFilterList, request, response);
             if(result != null && !result.toString().equals(GateFilter.SUCCESS)){
                 response.send(JSON.toJSONString(result));
                 return;
@@ -48,15 +52,42 @@ public class GateWayDispatcher implements HttpHandler {
 
             HttpResultModel httpResultModel = RequestServer.doRequest(requestInfoModel, request);
             String fileName = getFileName(httpResultModel);
+
+            Object resultData = null;
             if(fileName.equals(MarsCloudConstant.RESULT_FILE_NAME)){
-                Object object = SerializableCloudUtil.deSerialization(httpResultModel.getInputStream(), Object.class);
-                response.send(JSON.toJSONString(object));
-            } else {
-                response.downLoad(fileName, httpResultModel.getInputStream());
+                /* 如果返回的不是文件，则将数据反序列化出来 */
+                resultData = SerializableCloudUtil.deSerialization(httpResultModel.getInputStream(), Object.class);
             }
+            responseData(gateFilterList, request, response, resultData, httpResultModel.getInputStream(), fileName);
         } catch (Exception e) {
             log.error("处理请求失败!", e);
             RequestAndResultUtil.send(response,"处理请求发生错误"+e.getMessage());
+        }
+    }
+
+    /**
+     * 响应数据
+     * @param gateFilterList
+     * @param request
+     * @param response
+     * @param resultData
+     * @param resultStream
+     * @param fileName
+     */
+    private void responseData(List<GateFilter> gateFilterList, HttpMarsRequest request, HttpMarsResponse response, Object resultData, InputStream resultStream, String fileName){
+
+        /* 执行过滤器的 响应方法 */
+        Object filterResult = execFilterResult(gateFilterList, request, response, resultData, resultStream);
+        if(filterResult != null && !filterResult.toString().equals(GateFilter.SUCCESS)){
+            response.send(JSON.toJSONString(filterResult));
+            return;
+        }
+
+        /* 响应给客户端 */
+        if(fileName.equals(MarsCloudConstant.RESULT_FILE_NAME)){
+            response.send(JSON.toJSONString(resultData));
+        } else {
+            response.downLoad(fileName, resultStream);
         }
     }
 
@@ -66,14 +97,27 @@ public class GateWayDispatcher implements HttpHandler {
      * @param response
      * @return
      */
-    private Object execFilter(HttpMarsRequest request, HttpMarsResponse response){
-        List<GateFilter> gateFilterList = GateFactory.getGateFilter();
-        if(gateFilterList != null && gateFilterList.size() > 0){
-            for(GateFilter gateFilter : gateFilterList){
-                Object result = gateFilter.doFilter(request, response);
-                if(result != null && !result.toString().equals(GateFilter.SUCCESS)){
-                    return result;
-                }
+    private Object execFilter(List<GateFilter> gateFilterList, HttpMarsRequest request, HttpMarsResponse response){
+        for(GateFilter gateFilter : gateFilterList){
+            Object result = gateFilter.doFilter(request, response);
+            if(result != null && !result.toString().equals(GateFilter.SUCCESS)){
+                return result;
+            }
+        }
+        return GateFilter.SUCCESS;
+    }
+
+    /**
+     * 执行过滤器
+     * @param request
+     * @param response
+     * @return
+     */
+    private Object execFilterResult(List<GateFilter> gateFilterList, HttpMarsRequest request, HttpMarsResponse response, Object resultData, InputStream resultStream){
+        for(GateFilter gateFilter : gateFilterList){
+            Object result = gateFilter.doResult(request, response, resultData, resultStream);
+            if(result != null && !result.toString().equals(GateFilter.SUCCESS)){
+                return result;
             }
         }
         return GateFilter.SUCCESS;
