@@ -1,7 +1,7 @@
 package com.mars.gateway.request;
 
+import com.mars.cloud.model.HttpResultModel;
 import com.mars.cloud.request.rest.request.MarsRestTemplate;
-import com.mars.cloud.request.util.model.HttpResultModel;
 import com.mars.cloud.request.util.model.MarsHeader;
 import com.mars.gateway.api.model.RequestInfoModel;
 import com.mars.gateway.request.param.ParamConversionToModel;

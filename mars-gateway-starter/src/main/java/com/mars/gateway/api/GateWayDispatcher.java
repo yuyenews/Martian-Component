@@ -2,7 +2,7 @@ package com.mars.gateway.api;
 
 import com.alibaba.fastjson.JSON;
 import com.mars.cloud.constant.MarsCloudConstant;
-import com.mars.cloud.request.util.model.HttpResultModel;
+import com.mars.cloud.model.HttpResultModel;
 import com.mars.cloud.util.SerializableCloudUtil;
 import com.mars.gateway.api.filter.GateFactory;
 import com.mars.gateway.api.filter.GateFilter;

@@ -4,6 +4,7 @@ import com.mars.gateway.config.MarsGateWayConfig;
 import com.mars.gateway.core.server.GateServer;
 import com.mars.gateway.core.timer.GateTimer;
 import com.mars.gateway.core.util.GateWayConfigUtil;
+import com.mars.gateway.onload.OnLoader;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -26,8 +27,11 @@ public class StartGateWay {
             // 加载配置文件
             GateWayConfigUtil.setConfig(marsGateWayConfig);
 
+            // 初始化
+            OnLoader.onLoad();
+
             // 启动定时任务
-            GateTimer.doTimer();
+            GateTimer.doNotice();
 
             // 开启HTTP服务
             GateServer.startServer(marsGateWayConfig.port());
