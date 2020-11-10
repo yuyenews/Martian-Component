@@ -6,7 +6,7 @@
 
     <groupId>com.github.yuyenews</groupId>
     <artifactId>mars-gateway-starter</artifactId>
-    <version>1.1.1</version>
+    <version>1.1.2</version>
 
     <dependencies>
         <dependency>
@@ -17,7 +17,7 @@
         <dependency>
             <groupId>com.github.yuyenews</groupId>
             <artifactId>mars-cloud-starter</artifactId>
-            <version>4.0</version>
+            <version>4.0.1</version>
         </dependency>
 
         <dependency>
