@@ -15,7 +15,7 @@
 
 <br/>
 
-## mars-fuse
+## mars-fuse[暂时不可用]
 熔断器，用来跟martian-cloud配合使用的
 
 ## mars-gateway

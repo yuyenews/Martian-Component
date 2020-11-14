@@ -1,5 +1,6 @@
 package com.mars.gateway.core.timer;
 
+import com.mars.cloud.core.offline.OfflineManager;
 import com.mars.gateway.core.notice.GateNotice;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,6 +27,11 @@ public class GateTimer {
     private static final int period = 3000;
 
     /**
+     * 清理垃圾的频率
+     */
+    private static final int clearLoop = 200;
+
+    /**
      * 刷新本地缓存的微服务接口
      */
     public static void doNotice() {
@@ -39,5 +45,21 @@ public class GateTimer {
                 }
             }
         }, new Date(), period);
+    }
+
+    /**
+     * 服务下线
+     */
+    public static void clearApi(){
+        new Timer().scheduleAtFixedRate(new TimerTask() {
+            @Override
+            public void run() {
+                try {
+                    OfflineManager.doOffline();
+                } catch (Exception e) {
+                    logger.error("清理本地过期接口异常，200毫秒秒后将重试", e);
+                }
+            }
+        }, new Date(), clearLoop);
     }
 }
