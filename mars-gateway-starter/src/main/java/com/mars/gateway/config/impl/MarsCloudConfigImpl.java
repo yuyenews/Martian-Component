@@ -1,5 +1,6 @@
 package com.mars.gateway.config.impl;
 
+import com.mars.cloud.balanced.BalancedCalc;
 import com.mars.cloud.config.MarsCloudConfig;
 import com.mars.cloud.config.model.CloudConfig;
 import com.mars.cloud.config.model.FuseConfig;
@@ -29,6 +30,11 @@ public class MarsCloudConfigImpl extends MarsCloudConfig {
     @Override
     public FuseConfig getFuseConfig() {
         return marsGateWayConfig.getFuseConfig();
+    }
+
+    @Override
+    public BalancedCalc getBalancedCalc() {
+        return marsGateWayConfig.getBalancedCalc();
     }
 
     @Override
