@@ -19,7 +19,7 @@
 熔断器，用来跟martian-cloud配合使用的
 
 ## mars-gateway
-这是一个网关，跟mars-cloud配合使用，实现请求转发
+这是一个网关，跟Martian-cloud配合使用，实现请求转发
 
 ## mars-cp-base
 公共包，目前还没正式使用，且里面的类几乎为0
