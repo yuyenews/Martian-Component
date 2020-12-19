@@ -1,9 +1,11 @@
 package com.mars.gateway.core.notice;
 
 import com.mars.cloud.constant.MarsCloudConstant;
+import com.mars.cloud.core.blanced.PollingIndexManager;
 import com.mars.cloud.core.cache.ServerApiCache;
 import com.mars.cloud.core.cache.ServerApiCacheManager;
 import com.mars.cloud.core.util.NoticeUtil;
+import com.mars.cloud.core.vote.VoteManager;
 import com.mars.cloud.model.RestApiCacheModel;
 import com.mars.cloud.util.MarsCloudConfigUtil;
 import com.mars.common.util.StringUtil;
@@ -44,6 +46,12 @@ public class GateNotice {
             if(isSuccess){
                 marsLogger.info("感染接口成功.......");
             }
+
+            /* 初始化本地投票列表 */
+            VoteManager.loadVote();
+
+            /* 初始化轮询下标 */
+            PollingIndexManager.initPollingMap();
         } catch (Exception e){
             throw new Exception("接口传染失败", e);
         }

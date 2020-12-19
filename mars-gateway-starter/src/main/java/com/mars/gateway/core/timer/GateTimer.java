@@ -1,6 +1,8 @@
 package com.mars.gateway.core.timer;
 
+import com.mars.cloud.core.blanced.PollingIndexManager;
 import com.mars.cloud.core.offline.OfflineManager;
+import com.mars.cloud.core.vote.VoteManager;
 import com.mars.gateway.core.notice.GateNotice;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

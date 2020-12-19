@@ -1,5 +1,7 @@
 package com.mars.gateway.onload;
 
+import com.mars.cloud.core.blanced.PollingIndexManager;
+import com.mars.cloud.core.vote.VoteManager;
 import com.mars.gateway.core.notice.GateNotice;
 
 /**

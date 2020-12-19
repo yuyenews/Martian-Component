@@ -30,11 +30,12 @@ public abstract class MarsGateWayConfig {
     public abstract CloudConfig getGateWayConfig();
 
     /**
-     * 线程池配置
-     * @return 线程池配置
+     * 读取请求报文的缓冲区大小(每次读多少字节)
+     * 默认 1M
+     * @return
      */
-    public ThreadPoolConfig getThreadPoolConfig(){
-        return new ThreadPoolConfig();
+    public int readSize(){
+        return 1 * 1024 * 1024;
     }
 
     /**

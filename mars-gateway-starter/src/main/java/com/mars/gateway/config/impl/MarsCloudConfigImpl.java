@@ -28,6 +28,11 @@ public class MarsCloudConfigImpl extends MarsCloudConfig {
     }
 
     @Override
+    public int readSize() {
+        return marsGateWayConfig.readSize();
+    }
+
+    @Override
     public FuseConfig getFuseConfig() {
         return marsGateWayConfig.getFuseConfig();
     }
@@ -40,11 +45,6 @@ public class MarsCloudConfigImpl extends MarsCloudConfig {
     @Override
     public int port() {
         return marsGateWayConfig.port();
-    }
-
-    @Override
-    public ThreadPoolConfig getThreadPoolConfig() {
-        return marsGateWayConfig.getThreadPoolConfig();
     }
 
     @Override

@@ -9,16 +9,15 @@ import com.mars.gateway.api.filter.GateFilter;
 import com.mars.gateway.api.model.RequestInfoModel;
 import com.mars.gateway.core.util.RequestAndResultUtil;
 import com.mars.gateway.request.RequestServer;
+import com.mars.iserver.server.MarsServerHandler;
+import com.mars.iserver.server.impl.MarsHttpExchange;
 import com.mars.server.server.request.HttpMarsRequest;
 import com.mars.server.server.request.HttpMarsResponse;
 import com.mars.server.server.request.impl.HttpMarsDefaultRequest;
 import com.mars.server.server.request.impl.HttpMarsDefaultResponse;
-import com.sun.net.httpserver.HttpExchange;
-import com.sun.net.httpserver.HttpHandler;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.IOException;
 import java.io.InputStream;
 import java.util.List;
 import java.util.UUID;
@@ -26,12 +25,12 @@ import java.util.UUID;
 /**
  * 核心控制器，用来实现转发和响应
  */
-public class GateWayDispatcher implements HttpHandler {
+public class GateWayDispatcher implements MarsServerHandler {
 
     private Logger log = LoggerFactory.getLogger(GateWayDispatcher.class);
 
     @Override
-    public void handle(HttpExchange httpExchange) throws IOException {
+    public void request(MarsHttpExchange httpExchange) {
         HttpMarsRequest request = new HttpMarsDefaultRequest(httpExchange);
         HttpMarsResponse response = new HttpMarsDefaultResponse(httpExchange);
 
