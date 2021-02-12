@@ -5,6 +5,7 @@ import com.mars.cloud.config.MarsCloudConfig;
 import com.mars.cloud.config.model.CloudConfig;
 import com.mars.cloud.config.model.FuseConfig;
 import com.mars.common.base.config.model.CrossDomainConfig;
+import com.mars.common.base.config.model.RequestConfig;
 import com.mars.common.base.config.model.ThreadPoolConfig;
 import com.mars.gateway.config.MarsGateWayConfig;
 
@@ -28,8 +29,8 @@ public class MarsCloudConfigImpl extends MarsCloudConfig {
     }
 
     @Override
-    public int readSize() {
-        return marsGateWayConfig.readSize();
+    public RequestConfig requestConfig() {
+        return marsGateWayConfig.requestConfig();
     }
 
     @Override

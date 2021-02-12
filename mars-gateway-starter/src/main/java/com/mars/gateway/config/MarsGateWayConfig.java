@@ -4,6 +4,7 @@ import com.mars.cloud.balanced.BalancedCalc;
 import com.mars.cloud.config.model.CloudConfig;
 import com.mars.cloud.config.model.FuseConfig;
 import com.mars.common.base.config.model.CrossDomainConfig;
+import com.mars.common.base.config.model.RequestConfig;
 import com.mars.common.base.config.model.ThreadPoolConfig;
 import com.mars.gateway.api.filter.GateFilter;
 
@@ -30,12 +31,11 @@ public abstract class MarsGateWayConfig {
     public abstract CloudConfig getGateWayConfig();
 
     /**
-     * 读取请求报文的缓冲区大小(每次读多少字节)
-     * 默认 1M
+     * 请求设置
      * @return
      */
-    public int readSize(){
-        return 1 * 1024 * 1024;
+    public RequestConfig requestConfig(){
+        return new RequestConfig();
     }
 
     /**

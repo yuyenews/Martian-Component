@@ -10,6 +10,7 @@ import com.mars.iserver.server.impl.MarsHttpExchange;
 import com.mars.iserver.server.model.HttpHeaders;
 import com.mars.server.server.request.HttpMarsRequest;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -50,10 +51,12 @@ public class RequestServer {
         }
         MarsHeader marsHeader = new MarsHeader();
         for (String name : headers.keySet()) {
-            List<String> values = headers.get(name);
-            if (values == null || values.size() < 1) {
+            String value = headers.get(name);
+            if (value == null) {
                 continue;
             }
+            List<String> values = new ArrayList<>();
+            values.add(value);
             marsHeader.put(name, values);
         }
         return marsHeader;
