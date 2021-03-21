@@ -1,6 +1,5 @@
 package com.mars.start.tomcat.par;
 
-import com.alibaba.fastjson.JSONObject;
 import com.mars.common.constant.MarsConstant;
 import com.mars.iserver.constant.ParamTypeConstant;
 import com.mars.iserver.par.InitRequest;
@@ -54,7 +53,7 @@ public class InitTomcatRequest implements InitRequest {
                 marsParams = (Map<String, List<String>>) result.get(ParsingFormData.PARAMS_KEY);
             } else if (ParamTypeConstant.isJSON(contentType)) {
                 /* RAW提交(json) */
-                JSONObject jsonParams = raw(inputStream);
+                String jsonParams = raw(inputStream);
                 httpMarsRequest.setJsonParam(jsonParams);
             }
         }
@@ -98,14 +97,12 @@ public class InitTomcatRequest implements InitRequest {
      * @return httpMarsRequest的参数对象
      * @throws Exception 异常
      */
-    private JSONObject raw(InputStream inputStream) throws Exception {
+    private String raw(InputStream inputStream) throws Exception {
         String paramStr = getParamStr(inputStream);
         if(paramStr == null || paramStr.trim().equals("")){
             return null;
         }
-
-        JSONObject jsonObject = JSONObject.parseObject(paramStr);
-        return jsonObject;
+        return paramStr;
     }
 
     /**
